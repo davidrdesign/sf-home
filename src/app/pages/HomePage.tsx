@@ -8,6 +8,12 @@ import rbc from '../../imports/rbc-logo-shield.svg';
 
 export function HomePage() {
   useScrollReveal();
+  const matrixColumns = ['cdn', 'finance', 'merchants'] as const;
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1440
+  );
+  const isMobile = viewportWidth <= 600;
+  const isTablet = viewportWidth <= 900;
   
   // API Demo animation state
   const [demoStep, setDemoStep] = useState(0);
@@ -77,6 +83,12 @@ export function HomePage() {
       attribution: "SVP of Partnerships, Experian"
     }
   ];
+
+  useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   useEffect(() => {
     // Animation sequence timing
@@ -115,11 +127,20 @@ export function HomePage() {
     const caseInterval = setInterval(() => {
       setCaseIndex((prev) => (prev + 1) % caseStudies.length);
     }, 8000);
+
+    // Rotate matrix columns every 3.5 seconds
+    const columnInterval = setInterval(() => {
+      setSelectedColumn((prev) => {
+        const currentIndex = prev ? matrixColumns.indexOf(prev as (typeof matrixColumns)[number]) : -1;
+        return matrixColumns[(currentIndex + 1) % matrixColumns.length];
+      });
+    }, 3500);
     
     return () => {
       timeouts.forEach(clearTimeout);
       clearInterval(loopInterval);
       clearInterval(caseInterval);
+      clearInterval(columnInterval);
     };
   }, []);
   
@@ -132,10 +153,10 @@ export function HomePage() {
         background: 'var(--hp-ink)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        padding: '120px 48px 80px'
-      }}>
+          justifyContent: 'center',
+          overflow: 'hidden',
+          padding: isMobile ? '108px 20px 36px' : isTablet ? '112px 24px 56px' : '120px 48px 80px'
+        }}>
         {/* Subtle gradient background */}
         <div style={{
           position: 'absolute',
@@ -154,8 +175,8 @@ export function HomePage() {
           width: '100%',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 0.9fr) minmax(0, 1.1fr)',
-          gap: '48px',
+          gridTemplateColumns: isTablet ? '1fr' : 'minmax(0, 0.9fr) minmax(0, 1.1fr)',
+          gap: isMobile ? '24px' : isTablet ? '32px' : '48px',
           alignItems: 'center'
         }}>
           {/* Left Side - Content */}
@@ -164,12 +185,13 @@ export function HomePage() {
           }}>
             {/* Main headline */}
             <h1 style={{
-              fontSize: 'clamp(40px, 5vw, 72px)',
+              fontSize: isMobile ? 'clamp(42px, 14vw, 64px)' : 'clamp(40px, 5vw, 72px)',
               fontWeight: 500,
               letterSpacing: '-0.045em',
               lineHeight: 1.05,
               color: '#fff',
-              marginBottom: '24px'
+              marginBottom: isMobile ? '18px' : '24px',
+              maxWidth: isTablet ? '10ch' : 'none'
             }}>
               Identity.
               <br />
@@ -189,11 +211,12 @@ export function HomePage() {
 
             {/* Subheadline */}
             <p style={{
-              fontSize: 'clamp(16px, 1.8vw, 19px)',
+              fontSize: isMobile ? '16px' : 'clamp(16px, 1.8vw, 19px)',
               fontWeight: 300,
-              lineHeight: 1.6,
+              lineHeight: 1.55,
               color: 'rgba(255,255,255,0.6)',
-              marginBottom: '40px'
+              marginBottom: isMobile ? '28px' : '40px',
+              maxWidth: isTablet ? '36rem' : 'none'
             }}>
               Skyfire's trust network lets AI agents securely access the web, complete checkout, and transact with KYA-verified identity and payment infrastructure, purpose-built for the agentic era.
             </p>
@@ -202,16 +225,20 @@ export function HomePage() {
             <div style={{
               display: 'flex',
               gap: '14px',
-              flexWrap: 'wrap'
+              flexWrap: 'wrap',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'stretch' : 'flex-start'
             }}>
               <button className="btn" style={{
                 background: 'linear-gradient(135deg, #59AD9E 0%, #3E9686 100%)',
                 color: '#fff',
-                padding: '14px 32px',
+                padding: isMobile ? '16px 24px' : '14px 32px',
                 fontSize: '15px',
                 border: 'none',
                 boxShadow: '0 8px 24px rgba(89,173,158,0.3)',
-                transition: 'transform 0.2s, box-shadow 0.2s'
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                width: isMobile ? '100%' : 'auto',
+                justifyContent: 'center'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
@@ -226,11 +253,13 @@ export function HomePage() {
               <button className="btn" style={{
                 background: 'rgba(255,255,255,0.08)',
                 color: '#fff',
-                padding: '14px 32px',
+                padding: isMobile ? '16px 24px' : '14px 32px',
                 fontSize: '15px',
                 border: '1px solid rgba(255,255,255,0.15)',
                 backdropFilter: 'blur(12px)',
-                transition: 'background 0.2s, border-color 0.2s'
+                transition: 'background 0.2s, border-color 0.2s',
+                width: isMobile ? '100%' : 'auto',
+                justifyContent: 'center'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
@@ -248,15 +277,19 @@ export function HomePage() {
           {/* Right Side - Technical Network Diagram */}
           <div style={{
             position: 'relative',
-            height: '680px',
-            marginRight: '-48px',
+            height: isMobile ? '360px' : isTablet ? '460px' : '680px',
+            marginRight: isTablet ? '0' : '-48px',
             animation: 'fadeInUp 0.8s ease-out 0.2s backwards'
           }}>
             {/* Technical Network Diagram SVG */}
             <svg style={{
               width: '100%',
               height: '100%',
-              transform: 'scale(1.14) translate(24px, 18px)',
+              transform: isMobile
+                ? 'scale(1.02) translate(0px, 0px)'
+                : isTablet
+                  ? 'scale(1.06) translate(6px, 8px)'
+                  : 'scale(1.14) translate(24px, 18px)',
               transformOrigin: 'center'
             }} viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet">
               <defs>
@@ -418,6 +451,7 @@ export function HomePage() {
         </div>
 
         {/* Scroll indicator */}
+        {!isMobile && (
         <div style={{
           position: 'absolute',
           bottom: '40px',
@@ -444,6 +478,7 @@ export function HomePage() {
             background: 'linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)'
           }} />
         </div>
+        )}
 
         {/* Add keyframes via a style tag */}
         <style>{`
@@ -537,6 +572,36 @@ export function HomePage() {
         </div>
         
         <div className="matrix-table">
+          {isMobile ? (
+            <>
+              <div className="matrix-mobile-tabs">
+                {matrixColumns.map((column) => {
+                  const label =
+                    column === 'cdn'
+                      ? 'Content Delivery Networks'
+                      : column === 'finance'
+                        ? 'Finance'
+                        : 'Merchants';
+
+                  return (
+                    <button
+                      key={column}
+                      type="button"
+                      className="matrix-mobile-tab"
+                      onClick={() => setSelectedColumn(column)}
+                      style={{
+                        background: selectedColumn === column ? 'rgba(89,173,158,0.14)' : '#F5F4F2',
+                        borderColor: selectedColumn === column ? 'rgba(89,173,158,0.3)' : 'var(--hp-border)',
+                        color: selectedColumn === column ? '#0E0E0E' : '#7A7775'
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
           <div className="matrix-head">
             <div className="col-head"></div>
             <div className="col-head" onClick={() => setSelectedColumn(selectedColumn === 'cdn' ? null : 'cdn')} style={{ cursor: 'pointer', transition: 'all 0.3s ease', background: selectedColumn === 'cdn' ? 'rgba(89,173,158,0.12)' : '' }}>
@@ -549,6 +614,7 @@ export function HomePage() {
               Merchants
             </div>
           </div>
+          )}
 
           <div className="matrix-row" onClick={() => setSelectedRow(selectedRow === 'buyForMe' ? null : 'buyForMe')} style={{ cursor: 'pointer' }}>
             <div className="row-label">
@@ -556,6 +622,7 @@ export function HomePage() {
               <span className="rl-sub">In-app checkout</span>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'cdn' ? 'none' : 'block',
               background: (selectedRow === 'buyForMe' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'buyForMe' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'buyForMe' || selectedColumn === 'cdn') ? 0.25 : 1,
@@ -565,6 +632,7 @@ export function HomePage() {
               <div className="cell-body">Route verified agent checkout requests without triggering WAF or bot protection rules</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'finance' ? 'none' : 'block',
               background: (selectedRow === 'buyForMe' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'buyForMe' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'buyForMe' || selectedColumn === 'finance') ? 0.25 : 1,
@@ -574,6 +642,7 @@ export function HomePage() {
               <div className="cell-body">Stay top of wallet as agents complete purchases on behalf of banking app users</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'merchants' ? 'none' : 'block',
               background: (selectedRow === 'buyForMe' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'buyForMe' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'buyForMe' || selectedColumn === 'merchants') ? 0.25 : 1,
@@ -590,6 +659,7 @@ export function HomePage() {
               <span className="rl-sub">Identity verification</span>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'cdn' ? 'none' : 'block',
               background: (selectedRow === 'kya' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'kya' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'kya' || selectedColumn === 'cdn') ? 0.25 : 1,
@@ -599,6 +669,7 @@ export function HomePage() {
               <div className="cell-body">Accept KYA tokens to distinguish good agents from malicious bots with zero code required</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'finance' ? 'none' : 'block',
               background: (selectedRow === 'kya' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'kya' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'kya' || selectedColumn === 'finance') ? 0.25 : 1,
@@ -608,6 +679,7 @@ export function HomePage() {
               <div className="cell-body">KYC-verified identity extends to authorized agents acting on behalf of account holders</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'merchants' ? 'none' : 'block',
               background: (selectedRow === 'kya' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'kya' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'kya' || selectedColumn === 'merchants') ? 0.25 : 1,
@@ -624,6 +696,7 @@ export function HomePage() {
               <span className="rl-sub">Embedded payments</span>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'cdn' ? 'none' : 'block',
               background: (selectedRow === 'wallet' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'wallet' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'wallet' || selectedColumn === 'cdn') ? 0.25 : 1,
@@ -633,6 +706,7 @@ export function HomePage() {
               <div className="cell-body">Enable headless, API-native checkout flows for verified agents at CDN edge</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'finance' ? 'none' : 'block',
               background: (selectedRow === 'wallet' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'wallet' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'wallet' || selectedColumn === 'finance') ? 0.25 : 1,
@@ -642,6 +716,7 @@ export function HomePage() {
               <div className="cell-body">Issue per-transaction mandates. No PCI compliance burden on the bank's platform</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'merchants' ? 'none' : 'block',
               background: (selectedRow === 'wallet' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'wallet' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'wallet' || selectedColumn === 'merchants') ? 0.25 : 1,
@@ -658,6 +733,7 @@ export function HomePage() {
               <span className="rl-sub">Real-time risk</span>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'cdn' ? 'none' : 'block',
               background: (selectedRow === 'trustScore' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'trustScore' || selectedColumn === 'cdn') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'trustScore' || selectedColumn === 'cdn') ? 0.25 : 1,
@@ -667,6 +743,7 @@ export function HomePage() {
               <div className="cell-body">Block, throttle, or allow agents based on real-time trust signals at the CDN layer</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'finance' ? 'none' : 'block',
               background: (selectedRow === 'trustScore' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'trustScore' || selectedColumn === 'finance') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'trustScore' || selectedColumn === 'finance') ? 0.25 : 1,
@@ -676,6 +753,7 @@ export function HomePage() {
               <div className="cell-body">Score across agent history, payment patterns, and merchant feedback in milliseconds</div>
             </div>
             <div className="matrix-cell" style={{
+              display: isMobile && selectedColumn !== 'merchants' ? 'none' : 'block',
               background: (selectedRow === 'trustScore' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.08)' : '',
               borderColor: (selectedRow === 'trustScore' || selectedColumn === 'merchants') ? 'rgba(89,173,158,0.25)' : '',
               opacity: (selectedRow || selectedColumn) && !(selectedRow === 'trustScore' || selectedColumn === 'merchants') ? 0.25 : 1,
@@ -728,7 +806,7 @@ export function HomePage() {
               <div className="demo-url">api.skyfire.xyz/v1/agents/checkout</div>
             </div>
             <div className="demo-body" style={{
-              minHeight: '600px',
+              minHeight: isMobile ? 'auto' : '600px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'
@@ -976,7 +1054,7 @@ export function HomePage() {
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '100px 48px'
+          padding: isMobile ? '64px 0 0' : isTablet ? '84px 0 0' : '100px 48px'
         }}>
           {/* Header */}
           <div style={{
@@ -1014,8 +1092,9 @@ export function HomePage() {
                 <div style={{
                   display: 'flex',
                   justifyContent: 'center',
-                  gap: '16px',
-                  marginBottom: '48px'
+                  gap: isMobile ? '12px' : '16px',
+                  marginBottom: isMobile ? '28px' : '48px',
+                  flexWrap: 'wrap'
                 }}>
                   {currentCase.logos.map((logo, idx) => {
                     // Find which case study this logo corresponds to
@@ -1026,7 +1105,7 @@ export function HomePage() {
                         key={logo} 
                         onClick={() => setCaseIndex(correspondingCaseIndex)}
                         style={{
-                          padding: '32px 48px',
+                          padding: isMobile ? '20px 18px' : isTablet ? '24px 28px' : '32px 48px',
                           background: idx === currentCase.activeIndex ? currentCase.accentColor : '#fff',
                           color: idx === currentCase.activeIndex ? '#fff' : '#0E0E0E',
                           border: '1px solid rgba(14,14,14,0.1)',
@@ -1034,7 +1113,8 @@ export function HomePage() {
                           fontSize: '14px',
                           fontWeight: 600,
                           textAlign: 'center',
-                          minWidth: '200px',
+                          minWidth: isMobile ? 'calc(50% - 6px)' : isTablet ? '160px' : '200px',
+                          flex: isMobile ? '1 1 calc(50% - 6px)' : '0 1 auto',
                           transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
                           display: 'flex',
                           flexDirection: 'column',
@@ -1100,14 +1180,14 @@ export function HomePage() {
                 {/* Main Content Grid */}
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: '1fr 2fr',
-                  gap: '48px',
-                  marginBottom: '40px'
+                  gridTemplateColumns: isMobile ? '1fr' : '1fr 2fr',
+                  gap: isMobile ? '24px' : '48px',
+                  marginBottom: isMobile ? '24px' : '40px'
                 }}>
                   {/* Left - Problem & Solution */}
                   <div style={{
                     borderLeft: '3px solid #EE7843',
-                    paddingLeft: '24px'
+                    paddingLeft: isMobile ? '16px' : '24px'
                   }}>
                     <div style={{
                       marginBottom: '32px'
@@ -1157,12 +1237,13 @@ export function HomePage() {
                   {/* Right - Stats */}
                   <div style={{
                     display: 'flex',
-                    gap: '24px'
+                    gap: isMobile ? '12px' : '24px',
+                    flexDirection: isMobile ? 'column' : 'row'
                   }}>
                     {currentCase.stats.map((stat, idx) => (
                       <div key={idx} style={{
                         flex: 1,
-                        padding: '32px 24px',
+                        padding: isMobile ? '22px 20px' : '32px 24px',
                         background: `${currentCase.accentColor}14`,
                         border: `1px solid ${currentCase.accentColor}33`,
                         borderRadius: '4px',
@@ -1202,12 +1283,12 @@ export function HomePage() {
                 {/* Quote */}
                 <div style={{
                   background: `${currentCase.accentColor}10`,
-                  padding: '40px 48px',
+                  padding: isMobile ? '24px 20px' : '40px 48px',
                   borderLeft: `4px solid ${currentCase.accentColor}`,
                   borderRadius: '4px'
                 }}>
                   <div style={{
-                    fontSize: '20px',
+                    fontSize: isMobile ? '18px' : '20px',
                     lineHeight: 1.6,
                     fontStyle: 'italic',
                     color: '#0E0E0E',
