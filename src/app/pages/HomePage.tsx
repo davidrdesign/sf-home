@@ -18,7 +18,7 @@ export function HomePage() {
   
   // Matrix table interaction state
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
-  const [selectedColumn, setSelectedColumn] = useState<string | null>(null);
+  const [selectedColumn, setSelectedColumn] = useState<string | null>('finance');
   
   // Rotating merchants for demo
   const merchants = [
@@ -32,23 +32,25 @@ export function HomePage() {
   // Case studies data
   const caseStudies = [
     {
-      company: 'Experian',
+      company: 'Consumer Reports',
       logos: ['Consumer Reports', 'Royal Bank of Canada', 'Experian'],
-      activeIndex: 2,
-      problem: "Merchant partners were losing conversions when AI-driven shopping sessions had to break out of the app to complete identity verification and payment.",
-      solution: "Skyfire's Buy For Me protocol kept the entire purchase flow in-app, combining identity, payment, and merchant settlement into a single seamless handshake.",
+      activeIndex: 0,
+      accentColor: '#59AD9E',
+      problem: "Legacy fraud-detection pipelines couldn't distinguish legitimate AI agents from bots, blocking automated purchases and degrading the consumer experience.",
+      solution: "Skyfire's KYA identity layer gave every agent a verifiable credential that existing WAF and CDN partners could interpret in real time—no rip-and-replace required.",
       stats: [
-        { value: '10×', label: 'improvement', sublabel: 'in agent-assisted conversion rate' },
-        { value: '68%', label: 'reduction', sublabel: 'in checkout abandonment' },
-        { value: '$12M', label: 'incremental GMV in first quarter', sublabel: '' }
+        { value: '93%', label: 'reduction', sublabel: 'in false-positive agent blocks' },
+        { value: '2.4×', label: 'increase', sublabel: 'in automated transaction throughput' },
+        { value: 'Sub-200 ms', label: 'identity', sublabel: 'verification at edge' }
       ],
-      quote: "The in-app experience went from clunky to magical. Merchants are lining up to integrate.",
-      attribution: "SVP of Partnerships, Experian"
+      quote: "Skyfire let us welcome AI agents instead of fighting them. Our members get faster service and we get cleaner data.",
+      attribution: "VP of Digital Products, Consumer Reports"
     },
     {
       company: 'Royal Bank of Canada',
       logos: ['Consumer Reports', 'Royal Bank of Canada', 'Experian'],
       activeIndex: 1,
+      accentColor: '#3B6FD8',
       problem: "Customers wanted AI assistants to handle routine banking tasks—bill pay, transfers, balance checks—but regulatory and security requirements made it nearly impossible to grant programmatic access.",
       solution: "Skyfire's Agentic Wallet provided controlled, auditable payment access with built-in compliance guardrails, enabling 1-click agent checkout inside the banking app.",
       stats: [
@@ -60,18 +62,19 @@ export function HomePage() {
       attribution: "Head of Digital Innovation, Royal Bank of Canada"
     },
     {
-      company: 'Consumer Reports',
+      company: 'Experian',
       logos: ['Consumer Reports', 'Royal Bank of Canada', 'Experian'],
-      activeIndex: 0,
-      problem: "Legacy fraud-detection pipelines couldn't distinguish legitimate AI agents from bots, blocking automated purchases and degrading the consumer experience.",
-      solution: "Skyfire's KYA identity layer gave every agent a verifiable credential that existing WAF and CDN partners could interpret in real time—no rip-and-replace required.",
+      activeIndex: 2,
+      accentColor: '#7A5AF8',
+      problem: "Merchant partners were losing conversions when AI-driven shopping sessions had to break out of the app to complete identity verification and payment.",
+      solution: "Skyfire's Buy For Me protocol kept the entire purchase flow in-app, combining identity, payment, and merchant settlement into a single seamless handshake.",
       stats: [
-        { value: '93%', label: 'reduction', sublabel: 'in false-positive agent blocks' },
-        { value: '2.4×', label: 'increase', sublabel: 'in automated transaction throughput' },
-        { value: 'Sub-200 ms', label: 'identity', sublabel: 'verification at edge' }
+        { value: '10×', label: 'improvement', sublabel: 'in agent-assisted conversion rate' },
+        { value: '68%', label: 'reduction', sublabel: 'in checkout abandonment' },
+        { value: '$12M', label: 'incremental GMV in first quarter', sublabel: '' }
       ],
-      quote: "Skyfire let us welcome AI agents instead of fighting them. Our members get faster service and we get cleaner data.",
-      attribution: "VP of Digital Products, Consumer Reports"
+      quote: "The in-app experience went from clunky to magical. Merchants are lining up to integrate.",
+      attribution: "SVP of Partnerships, Experian"
     }
   ];
   
@@ -151,8 +154,8 @@ export function HomePage() {
           width: '100%',
           margin: '0 auto',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '80px',
+          gridTemplateColumns: 'minmax(0, 0.9fr) minmax(0, 1.1fr)',
+          gap: '48px',
           alignItems: 'center'
         }}>
           {/* Left Side - Content */}
@@ -218,7 +221,7 @@ export function HomePage() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 8px 24px rgba(89,173,158,0.3)';
               }}>
-                Start Building →
+                Become Agent Ready
               </button>
               <button className="btn" style={{
                 background: 'rgba(255,255,255,0.08)',
@@ -237,7 +240,7 @@ export function HomePage() {
                 e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
                 e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
               }}>
-                Watch Demo
+                Enable Buy for Me
               </button>
             </div>
           </div>
@@ -245,68 +248,16 @@ export function HomePage() {
           {/* Right Side - Technical Network Diagram */}
           <div style={{
             position: 'relative',
-            height: '600px',
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '12px',
-            padding: '20px',
+            height: '680px',
+            marginRight: '-48px',
             animation: 'fadeInUp 0.8s ease-out 0.2s backwards'
           }}>
-            {/* Diagram Header */}
-            <div style={{
-              marginBottom: '20px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <div>
-                <div style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#fff',
-                  marginBottom: '4px'
-                }}>
-                  System Architecture
-                </div>
-                <div style={{
-                  fontSize: '14px',
-                  color: '#fff'
-                }}>
-                  Trust Network Topology
-                </div>
-              </div>
-              <div style={{
-                display: 'flex',
-                gap: '6px',
-                alignItems: 'center'
-              }}>
-                <div style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#59AD9E',
-                  boxShadow: '0 0 8px #59AD9E'
-                }}>
-                  <div style={{
-                    animation: 'pulse 2s ease-in-out infinite'
-                  }} />
-                </div>
-                <div style={{
-                  fontSize: '11px',
-                  color: '#fff',
-                  fontWeight: 500
-                }}>
-                  LIVE
-                </div>
-              </div>
-            </div>
-
             {/* Technical Network Diagram SVG */}
             <svg style={{
               width: '100%',
-              height: 'calc(100% - 60px)'
+              height: '100%',
+              transform: 'scale(1.14) translate(24px, 18px)',
+              transformOrigin: 'center'
             }} viewBox="0 0 600 500" preserveAspectRatio="xMidYMid meet">
               <defs>
                 {/* Gradients */}
@@ -326,41 +277,28 @@ export function HomePage() {
                 </radialGradient>
               </defs>
               
-              {/* Subtle grid background */}
-              <rect width="600" height="500" fill="rgba(255,255,255,0.01)" />
-              <g opacity="0.06">
-                {Array.from({ length: 11 }).map((_, i) => (
-                  <line key={`h-${i}`} x1="50" y1={50 + i * 40} x2="550" y2={50 + i * 40} 
-                        stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
-                ))}
-                {Array.from({ length: 13 }).map((_, i) => (
-                  <line key={`v-${i}`} x1={50 + i * 40} y1="50" x2={50 + i * 40} y2="450" 
-                        stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
-                ))}
-              </g>
-              
               {/* Connection Lines */}
               <g>
                 {/* Identity to Core */}
-                <line x1="150" y1="150" x2="260" y2="240" 
+                <line x1="232" y1="191" x2="273" y2="236" 
                       stroke="#59AD9E" strokeWidth="2" strokeOpacity="0.4" />
-                <line x1="150" y1="150" x2="260" y2="240" 
+                <line x1="232" y1="191" x2="273" y2="236" 
                       stroke="#59AD9E" strokeWidth="1.5" strokeDasharray="5,5" strokeOpacity="0.8">
                   <animate attributeName="stroke-dashoffset" from="0" to="10" dur="2s" repeatCount="indefinite" />
                 </line>
                 
                 {/* Payment to Core */}
-                <line x1="450" y1="150" x2="340" y2="240" 
+                <line x1="368" y1="191" x2="327" y2="236" 
                       stroke="#59AD9E" strokeWidth="2" strokeOpacity="0.4" />
-                <line x1="450" y1="150" x2="340" y2="240" 
+                <line x1="368" y1="191" x2="327" y2="236" 
                       stroke="#59AD9E" strokeWidth="1.5" strokeDasharray="5,5" strokeOpacity="0.8">
                   <animate attributeName="stroke-dashoffset" from="0" to="10" dur="2s" repeatCount="indefinite" />
                 </line>
                 
                 {/* Core to Commerce */}
-                <line x1="300" y1="290" x2="300" y2="350" 
+                <line x1="300" y1="305" x2="300" y2="358" 
                       stroke="#59AD9E" strokeWidth="2" strokeOpacity="0.4" />
-                <line x1="300" y1="290" x2="300" y2="350" 
+                <line x1="300" y1="305" x2="300" y2="358" 
                       stroke="#59AD9E" strokeWidth="1.5" strokeDasharray="5,5" strokeOpacity="0.8">
                   <animate attributeName="stroke-dashoffset" from="0" to="10" dur="2s" repeatCount="indefinite" />
                 </line>
@@ -369,6 +307,14 @@ export function HomePage() {
               {/* Nodes */}
               {/* Center - Skyfire Core */}
               <g>
+                <circle cx="300" cy="265" r="78" fill="none" stroke="rgba(238,120,67,0.28)" strokeWidth="1.5">
+                  <animate attributeName="stroke-opacity" values="0.28;0.58;0.28" dur="2.8s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="78;82;78" dur="2.8s" repeatCount="indefinite" />
+                </circle>
+                <circle cx="300" cy="265" r="62" fill="none" stroke="rgba(238,120,67,0.18)" strokeWidth="1.25">
+                  <animate attributeName="stroke-opacity" values="0.18;0.4;0.18" dur="2.8s" begin="0.18s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="62;65;62" dur="2.8s" begin="0.18s" repeatCount="indefinite" />
+                </circle>
                 <circle cx="300" cy="265" r="48" fill="url(#orange-glow)" />
                 <circle cx="300" cy="265" r="40" fill="rgba(238,120,67,0.15)" 
                         stroke="#EE7843" strokeWidth="2.5" />
@@ -376,38 +322,38 @@ export function HomePage() {
                         stroke="#EE7843" strokeWidth="1" strokeOpacity="0.4" />
                 <text x="300" y="268" textAnchor="middle" 
                       fill="#EE7843" fontSize="14" fontWeight="700">SKYFIRE</text>
-                <text x="300" y="281" textAnchor="middle" 
-                      fill="#EE7843" fontSize="9" fontWeight="500" opacity="0.8">Trust Core</text>
               </g>
               
               {/* Left - Identity */}
               <g>
-                <circle cx="150" cy="150" r="38" fill="url(#teal-glow)" />
-                <circle cx="150" cy="150" r="32" fill="rgba(89,173,158,0.12)" 
+                <circle cx="210" cy="168" r="58" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                <circle cx="210" cy="168" r="46" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+                <circle cx="210" cy="168" r="38" fill="url(#teal-glow)" />
+                <circle cx="210" cy="168" r="32" fill="rgba(89,173,158,0.12)" 
                         stroke="#59AD9E" strokeWidth="2" />
-                <circle cx="150" cy="150" r="25" fill="none" 
+                <circle cx="210" cy="168" r="25" fill="none" 
                         stroke="#59AD9E" strokeWidth="1" strokeOpacity="0.3" />
-                <text x="150" y="153" textAnchor="middle" 
+                <text x="210" y="171" textAnchor="middle" 
                       fill="#7FD4C1" fontSize="13" fontWeight="700">KYA</text>
-                <text x="150" y="164" textAnchor="middle" 
-                      fill="#59AD9E" fontSize="8" fontWeight="500" opacity="0.8">Identity</text>
               </g>
               
               {/* Right - Payment */}
               <g>
-                <circle cx="450" cy="150" r="38" fill="url(#teal-glow)" />
-                <circle cx="450" cy="150" r="32" fill="rgba(89,173,158,0.12)" 
+                <circle cx="390" cy="168" r="58" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                <circle cx="390" cy="168" r="46" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+                <circle cx="390" cy="168" r="38" fill="url(#teal-glow)" />
+                <circle cx="390" cy="168" r="32" fill="rgba(89,173,158,0.12)" 
                         stroke="#59AD9E" strokeWidth="2" />
-                <circle cx="450" cy="150" r="25" fill="none" 
+                <circle cx="390" cy="168" r="25" fill="none" 
                         stroke="#59AD9E" strokeWidth="1" strokeOpacity="0.3" />
-                <text x="450" y="153" textAnchor="middle" 
+                <text x="390" y="171" textAnchor="middle" 
                       fill="#7FD4C1" fontSize="13" fontWeight="700">WALLET</text>
-                <text x="450" y="164" textAnchor="middle" 
-                      fill="#59AD9E" fontSize="8" fontWeight="500" opacity="0.8">Payment</text>
               </g>
               
               {/* Bottom - Commerce */}
               <g>
+                <circle cx="300" cy="390" r="58" fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+                <circle cx="300" cy="390" r="46" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
                 <circle cx="300" cy="390" r="38" fill="url(#teal-glow)" />
                 <circle cx="300" cy="390" r="32" fill="rgba(89,173,158,0.12)" 
                         stroke="#59AD9E" strokeWidth="2" />
@@ -415,87 +361,57 @@ export function HomePage() {
                         stroke="#59AD9E" strokeWidth="1" strokeOpacity="0.3" />
                 <text x="300" y="393" textAnchor="middle" 
                       fill="#7FD4C1" fontSize="13" fontWeight="700">BUY</text>
-                <text x="300" y="404" textAnchor="middle" 
-                      fill="#59AD9E" fontSize="8" fontWeight="500" opacity="0.8">Commerce</text>
               </g>
-              
-              {/* Sub-nodes - Simple and clean */}
+
+              {/* Sub-node pills */}
               <g opacity="0.9">
-                {/* Identity sub-nodes */}
-                <rect x="48" y="88" width="48" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
-                <text x="72" y="100" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">ID</text>
-                <line x1="96" y1="106" x2="125" y2="135" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
-                
-                <rect x="42" y="188" width="60" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
-                <text x="72" y="200" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">AUTH</text>
-                <line x1="96" y1="194" x2="125" y2="165" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
-                
-                {/* Payment sub-nodes */}
-                <rect x="492" y="88" width="48" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
-                <text x="516" y="100" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">PAY</text>
-                <line x1="504" y1="106" x2="475" y2="135" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
-                
-                <rect x="482" y="188" width="68" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
-                <text x="516" y="200" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">SETTLE</text>
-                <line x1="504" y1="194" x2="475" y2="165" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
-                
-                {/* Commerce sub-nodes */}
+                {/* Identity */}
+                <rect x="118" y="100" width="48" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
+                <text x="142" y="112" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">ID</text>
+                <line x1="166" y1="118" x2="185" y2="148" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
+
+                <rect x="112" y="208" width="60" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
+                <text x="142" y="220" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">AUTH</text>
+                <line x1="166" y1="214" x2="186" y2="188" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
+
+                {/* Payment */}
+                <rect x="434" y="100" width="48" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
+                <text x="458" y="112" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">PAY</text>
+                <line x1="434" y1="118" x2="415" y2="148" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
+
+                <rect x="428" y="208" width="68" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
+                <text x="462" y="220" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">SETTLE</text>
+                <line x1="428" y1="214" x2="414" y2="188" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
+
+                {/* Commerce */}
                 <rect x="200" y="418" width="56" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
                 <text x="228" y="430" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">CART</text>
                 <line x1="246" y1="424" x2="275" y2="405" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
-                
+
                 <rect x="338" y="418" width="64" height="24" rx="12" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
                 <text x="370" y="430" textAnchor="middle" dominantBaseline="middle" fill="#fff" fontSize="9" fontWeight="600">ORDER</text>
                 <line x1="354" y1="424" x2="325" y2="405" stroke="rgba(89,173,158,0.3)" strokeWidth="1.5" />
               </g>
               
-              {/* External Systems */}
-              <g opacity="0.8">
-                <rect x="30" y="30" width="90" height="40" rx="4" 
-                      fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.3)" 
-                      strokeWidth="1" strokeDasharray="3,2" />
-                <text x="75" y="46" textAnchor="middle" 
-                      fill="#fff" fontSize="9" fontWeight="600">IDENTITY</text>
-                <text x="75" y="58" textAnchor="middle" 
-                      fill="#fff" fontSize="7">PROVIDERS</text>
-                <line x1="75" y1="70" x2="120" y2="120" 
-                      stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2,2" />
-                
-                <rect x="480" y="30" width="90" height="40" rx="4" 
-                      fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.3)" 
-                      strokeWidth="1" strokeDasharray="3,2" />
-                <text x="525" y="46" textAnchor="middle" 
-                      fill="#fff" fontSize="9" fontWeight="600">PAYMENT</text>
-                <text x="525" y="58" textAnchor="middle" 
-                      fill="#fff" fontSize="7">NETWORKS</text>
-                <line x1="525" y1="70" x2="480" y2="120" 
-                      stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="2,2" />
-              </g>
-              
               {/* Animated data flow dots */}
               <g>
                 <circle r="3.5" fill="#59AD9E">
-                  <animateMotion dur="3s" repeatCount="indefinite" path="M 150 150 L 260 240" />
-                  <animate attributeName="opacity" values="0;1;1;0" dur="3s" repeatCount="indefinite" />
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 232 191 L 273 236" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.12;0.82;0.9;1" dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="3.5;3.5;3.5;10.5" keyTimes="0;0.82;0.9;1" dur="3s" repeatCount="indefinite" />
                 </circle>
                 
                 <circle r="3.5" fill="#59AD9E">
-                  <animateMotion dur="3s" repeatCount="indefinite" begin="1s" path="M 450 150 L 340 240" />
-                  <animate attributeName="opacity" values="0;1;1;0" dur="3s" begin="1s" repeatCount="indefinite" />
+                  <animateMotion dur="3s" repeatCount="indefinite" begin="1s" path="M 368 191 L 327 236" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.12;0.82;0.9;1" dur="3s" begin="1s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="3.5;3.5;3.5;10.5" keyTimes="0;0.82;0.9;1" dur="3s" begin="1s" repeatCount="indefinite" />
                 </circle>
                 
                 <circle r="3.5" fill="#59AD9E">
-                  <animateMotion dur="3s" repeatCount="indefinite" begin="2s" path="M 300 290 L 300 350" />
-                  <animate attributeName="opacity" values="0;1;1;0" dur="3s" begin="2s" repeatCount="indefinite" />
+                  <animateMotion dur="3s" repeatCount="indefinite" begin="2s" path="M 300 305 L 300 358" />
+                  <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.12;0.82;0.9;1" dur="3s" begin="2s" repeatCount="indefinite" />
+                  <animate attributeName="r" values="3.5;3.5;3.5;10.5" keyTimes="0;0.82;0.9;1" dur="3s" begin="2s" repeatCount="indefinite" />
                 </circle>
-              </g>
-              
-              {/* Corner markers */}
-              <g stroke="#EE7843" fill="none" strokeWidth="1.5" opacity="0.5">
-                <path d="M 20 20 L 40 20 M 20 20 L 20 40" />
-                <path d="M 580 20 L 560 20 M 580 20 L 580 40" />
-                <path d="M 20 480 L 40 480 M 20 480 L 20 460" />
-                <path d="M 580 480 L 560 480 M 580 480 L 580 460" />
               </g>
             </svg>
           </div>
@@ -568,9 +484,7 @@ export function HomePage() {
             <p>A portable, verifiable identity signal that your existing enforcement partners and fraud detection systems interpret and act on. KYA is designed to extend, not replace, the tools already sitting in front of your web properties.</p>
             <div className="partner-row">
               {['Akamai', 'Datadome', 'Ory', 'Okta', 'Forter', 'Experian'].map((p) => (
-                <span key={p} className="p-tag">
-                  <LogoImage name={p} size={14} showText={true} />
-                </span>
+                <span key={p} className="p-tag">{p}</span>
               ))}
             </div>
             <a href="#" className="learn-more">Learn more about the Agent Know Your Agent Protocol →</a>
@@ -581,9 +495,7 @@ export function HomePage() {
             <p>Commerce only happens when an agent can complete checkout with controlled payment access and a clear audit trail. Skyfire partners with major merchants, payments, and checkout infrastructure so approved agents can pay reliably, safely, and at scale.</p>
             <div className="partner-row">
               {['Visa', 'Henry Labs', 'Cart-ai', 'Consumer Reports', 'Getty Images'].map((p) => (
-                <span key={p} className="p-tag">
-                  <LogoImage name={p} size={14} showText={true} />
-                </span>
+                <span key={p} className="p-tag">{p}</span>
               ))}
             </div>
             <a href="#" className="learn-more">Learn more about the Agent Checkout and Payments Platform →</a>
@@ -628,16 +540,13 @@ export function HomePage() {
           <div className="matrix-head">
             <div className="col-head"></div>
             <div className="col-head" onClick={() => setSelectedColumn(selectedColumn === 'cdn' ? null : 'cdn')} style={{ cursor: 'pointer', transition: 'all 0.3s ease', background: selectedColumn === 'cdn' ? 'rgba(89,173,158,0.12)' : '' }}>
-              Content Delivery Networks<br />
-              <span className="subtitle">Akamai, Cloudflare, Fastly</span>
+              Content Delivery Networks
             </div>
             <div className="col-head" onClick={() => setSelectedColumn(selectedColumn === 'finance' ? null : 'finance')} style={{ cursor: 'pointer', transition: 'all 0.3s ease', background: selectedColumn === 'finance' ? 'rgba(89,173,158,0.12)' : '' }}>
-              Finance<br />
-              <span className="subtitle">Citi, Bank of America, RBC</span>
+              Finance
             </div>
             <div className="col-head" onClick={() => setSelectedColumn(selectedColumn === 'merchants' ? null : 'merchants')} style={{ cursor: 'pointer', transition: 'all 0.3s ease', background: selectedColumn === 'merchants' ? 'rgba(89,173,158,0.12)' : '' }}>
-              Merchants<br />
-              <span className="subtitle">Consumer Reports, Getty Images</span>
+              Merchants
             </div>
           </div>
 
@@ -785,6 +694,29 @@ export function HomePage() {
           <div className="demo-left">
             <h2>Watch an agent complete a purchase</h2>
             <p>From verification to checkout in under 200ms. See how Skyfire's infrastructure enables seamless autonomous commerce.</p>
+            <div style={{
+              display: 'flex',
+              gap: '12px',
+              flexWrap: 'wrap',
+              marginTop: '28px'
+            }}>
+              <a
+                className="btn btn-teal"
+                href="https://app.skyfire.xyz/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Launch Skyfire
+              </a>
+              <a
+                className="btn btn-outline-white"
+                href="https://docs.skyfire.xyz/docs/developer-documentation"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read Documentation
+              </a>
+            </div>
           </div>
           <div className="demo-right">
             <div className="demo-bar">
@@ -1077,9 +1009,7 @@ export function HomePage() {
           {(() => {
             const currentCase = caseStudies[caseIndex];
             return (
-              <div key={caseIndex} style={{
-                animation: 'fadeInCase 0.6s ease'
-              }}>
+              <div>
                 {/* Logo Cards */}
                 <div style={{
                   display: 'flex',
@@ -1097,7 +1027,7 @@ export function HomePage() {
                         onClick={() => setCaseIndex(correspondingCaseIndex)}
                         style={{
                           padding: '32px 48px',
-                          background: idx === currentCase.activeIndex ? '#0E0E0E' : '#fff',
+                          background: idx === currentCase.activeIndex ? currentCase.accentColor : '#fff',
                           color: idx === currentCase.activeIndex ? '#fff' : '#0E0E0E',
                           border: '1px solid rgba(14,14,14,0.1)',
                           borderRadius: '4px',
@@ -1105,24 +1035,21 @@ export function HomePage() {
                           fontWeight: 600,
                           textAlign: 'center',
                           minWidth: '200px',
-                          transition: 'all 0.3s ease',
+                          transition: 'background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
                           display: 'flex',
                           flexDirection: 'column',
                           gap: '12px',
                           alignItems: 'center',
                           cursor: 'pointer',
-                          transform: idx === currentCase.activeIndex ? 'scale(1)' : 'scale(0.98)',
                           boxShadow: idx === currentCase.activeIndex ? '0 8px 24px rgba(14,14,14,0.15)' : 'none'
                         }}
                         onMouseEnter={(e) => {
                           if (idx !== currentCase.activeIndex) {
-                            e.currentTarget.style.transform = 'scale(1.02)';
                             e.currentTarget.style.boxShadow = '0 4px 12px rgba(14,14,14,0.1)';
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (idx !== currentCase.activeIndex) {
-                            e.currentTarget.style.transform = 'scale(0.98)';
                             e.currentTarget.style.boxShadow = 'none';
                           }
                         }}
@@ -1190,7 +1117,7 @@ export function HomePage() {
                         fontWeight: 600,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#8E8984',
+                        color: currentCase.accentColor,
                         marginBottom: '12px'
                       }}>
                         THE PROBLEM
@@ -1211,7 +1138,7 @@ export function HomePage() {
                         fontWeight: 600,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#8E8984',
+                        color: currentCase.accentColor,
                         marginBottom: '12px'
                       }}>
                         SKYFIRE SOLUTION
@@ -1236,10 +1163,11 @@ export function HomePage() {
                       <div key={idx} style={{
                         flex: 1,
                         padding: '32px 24px',
-                        background: '#fff',
-                        border: '1px solid rgba(14,14,14,0.1)',
+                        background: `${currentCase.accentColor}14`,
+                        border: `1px solid ${currentCase.accentColor}33`,
                         borderRadius: '4px',
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        boxShadow: `0 8px 20px ${currentCase.accentColor}14`
                       }}>
                         <div style={{
                           fontSize: 'clamp(32px, 4vw, 48px)',
@@ -1273,9 +1201,9 @@ export function HomePage() {
 
                 {/* Quote */}
                 <div style={{
-                  background: 'rgba(89,173,158,0.05)',
+                  background: `${currentCase.accentColor}10`,
                   padding: '40px 48px',
-                  borderLeft: '4px solid #59AD9E',
+                  borderLeft: `4px solid ${currentCase.accentColor}`,
                   borderRadius: '4px'
                 }}>
                   <div style={{
@@ -1308,13 +1236,16 @@ export function HomePage() {
             {caseStudies.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCaseIndex(idx)}
+                onClick={() => {
+                  const targetCaseIndex = caseStudies.findIndex((cs) => cs.activeIndex === idx);
+                  setCaseIndex(targetCaseIndex);
+                }}
                 style={{
                   width: '10px',
                   height: '10px',
                   borderRadius: '50%',
                   border: 'none',
-                  background: idx === caseIndex ? '#59AD9E' : 'rgba(142,137,132,0.3)',
+                  background: idx === caseStudies[caseIndex].activeIndex ? '#59AD9E' : 'rgba(142,137,132,0.3)',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   padding: 0
@@ -1362,7 +1293,7 @@ export function HomePage() {
           <div className="press-logos">
             {['The Wall Street Journal', 'TechCrunch', 'Decrypt', 'VentureBeat', 'Forbes', 'Business Insider', 'American Banker'].map((pub) => (
               <div key={pub} className="press-logo">
-                <LogoImage name={pub} size={20} showText={true} />
+                <LogoImage name={pub} size={20} showText={false} />
               </div>
             ))}
           </div>

@@ -285,11 +285,10 @@ nav.site-nav.nav-about .nav-cta:hover { background: var(--ab-mid); }
   background: #F5F4F2; border-bottom: 1px solid var(--hp-border);
 }
 .matrix-head .col-head {
-  padding: 16px 20px; font-size: 13px; font-weight: 600; letter-spacing: -0.01em;
+  padding: 18px 20px; font-size: 16px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2;
   border-right: 1px solid var(--hp-border);
 }
 .matrix-head .col-head:last-child { border-right: none; }
-.matrix-head .col-head .subtitle { font-size: 11px; font-weight: 400; color: var(--hp-muted); margin-top: 3px; }
 .matrix-row {
   display: grid; grid-template-columns: 200px 1fr 1fr 1fr;
   border-bottom: 1px solid var(--hp-border); transition: background 0.15s;
@@ -388,9 +387,9 @@ nav.site-nav.nav-about .nav-cta:hover { background: var(--ab-mid); }
 .partner-pill:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
 /* Press */
-.press-section { padding: 48px 48px; text-align: center; border-bottom: 1px solid var(--hp-border); }
+.press-section { padding: 48px 48px; text-align: left; border-bottom: 1px solid var(--hp-border); }
 .press-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--hp-light); margin-bottom: 20px; }
-.press-logos { display: flex; align-items: center; justify-content: center; gap: 24px 32px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+.press-logos { display: flex; align-items: center; justify-content: flex-start; gap: 24px 32px; flex-wrap: wrap; max-width: 1000px; margin: 0; }
 .press-logo { 
   font-size: 15px; 
   font-weight: 400; 

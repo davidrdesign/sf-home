@@ -6,7 +6,7 @@ export function Layout() {
   const location = useLocation();
   
   // Determine nav theme based on current route
-  const navTheme = location.pathname === '/about' ? 'nav-about' : 'nav-home';
+  const navTheme = ['/about', '/alternate-home'].includes(location.pathname) ? 'nav-about' : 'nav-home';
 
   return (
     <>

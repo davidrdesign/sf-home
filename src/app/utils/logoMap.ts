@@ -1,5 +1,6 @@
 import { IconType } from 'react-icons';
 import { 
+  SiAnthropic,
   SiVisa,
   SiMastercard,
   SiStripe,
@@ -11,9 +12,20 @@ import {
   SiTechcrunch,
   SiAkamai,
   SiOkta,
-  SiCircle
+  SiCircle,
+  SiBose
 } from 'react-icons/si';
 import { Building2 } from 'lucide-react';
+
+const logoNameAliases: Record<string, string> = {
+  'amazon.com': 'amazon',
+  'bose headphones': 'bose',
+  'openai tokens': 'openai',
+  'rbc': 'royal bank of canada',
+  'shopify checkout': 'shopify',
+  'the wall street journal': 'wall street journal',
+  'walmart.com': 'walmart',
+};
 
 // Map company names to their react-icons brand icons
 // Only including icons that are confirmed to exist in simple-icons
@@ -29,25 +41,28 @@ export const logoIconMap: Record<string, IconType | typeof Building2> = {
   'cloudflare': SiCloudflare,
   'akamai': SiAkamai,
   'openai': SiOpenai,
-  'openai tokens': SiOpenai,
-  'anthropic': SiOpenai, // Using OpenAI as placeholder
+  'anthropic': SiAnthropic,
   
   // Security & Identity
   'okta': SiOkta,
   
   // E-commerce
   'shopify': SiShopify,
-  'shopify checkout': SiShopify,
   'walmart': SiWalmart,
-  'walmart.com': SiWalmart,
+  'bose': SiBose,
   
   // Media
   'techcrunch': SiTechcrunch,
 };
 
+export function normalizeLogoName(name: string): string {
+  const normalized = name.toLowerCase().trim();
+  return logoNameAliases[normalized] || normalized;
+}
+
 // Get icon component for a company name
 export function getLogoIcon(name: string): IconType | typeof Building2 | null {
-  const normalized = name.toLowerCase().trim();
+  const normalized = normalizeLogoName(name);
   return logoIconMap[normalized] || null;
 }
 
