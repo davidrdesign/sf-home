@@ -10,10 +10,10 @@ import {
   SiWalmart,
   SiGooglecloud,
   SiTechcrunch,
-  SiAkamai,
   SiOkta,
   SiCircle,
-  SiBose
+  SiBose,
+  SiAuth0,
 } from 'react-icons/si';
 import { Building2 } from 'lucide-react';
 
@@ -39,12 +39,12 @@ export const logoIconMap: Record<string, IconType | typeof Building2> = {
   // Tech & Cloud
   'google cloud': SiGooglecloud,
   'cloudflare': SiCloudflare,
-  'akamai': SiAkamai,
   'openai': SiOpenai,
   'anthropic': SiAnthropic,
   
   // Security & Identity
   'okta': SiOkta,
+  'auth0': SiAuth0,
   
   // E-commerce
   'shopify': SiShopify,

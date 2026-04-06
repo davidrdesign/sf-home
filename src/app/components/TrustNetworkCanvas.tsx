@@ -56,9 +56,9 @@ export function TrustNetworkCanvas({ fullscreen = false }: TrustNetworkCanvasPro
 
     const nodes: Node[] = [
       { label: 'Skyfire', sub: 'Trust Layer', r: 52, color: ORANGE, ring: 0 },
-      { label: 'KYA', sub: 'Identity', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: 0 },
-      { label: 'Wallet', sub: 'Payments', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: Math.PI * 0.66 },
-      { label: 'Buy Me', sub: 'Commerce', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: Math.PI * 1.33 },
+      { label: 'Access', sub: 'KYA token', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: 0 },
+      { label: 'Identity', sub: 'Verified agent', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: Math.PI * 0.66 },
+      { label: 'Checkout', sub: 'Wallet & pay', r: 30, color: TEAL, orbit: 130, speed: 0.0004, phase: Math.PI * 1.33 },
       { label: 'Akamai', sub: 'CDN', r: 22, color: WHITE, orbit: 230, speed: 0.00022, phase: 0.3 },
       { label: 'Experian', sub: 'Identity', r: 22, color: WHITE, orbit: 230, speed: 0.00022, phase: 1.5 },
       { label: 'Forter', sub: 'Fraud', r: 22, color: WHITE, orbit: 230, speed: 0.00022, phase: 2.7 },
