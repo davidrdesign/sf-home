@@ -174,7 +174,7 @@ export function HomePage() {
           `
         }} />
 
-        {/* Hero: centered story + full-width diagram band */}
+        {/* Hero: text left | diagram right */}
         <div style={{
           position: 'relative',
           zIndex: 10,
@@ -182,16 +182,16 @@ export function HomePage() {
           width: '100%',
           margin: '0 auto',
           display: 'flex',
-          flexDirection: 'column',
+          flexDirection: isMobile ? 'column' : 'row',
           alignItems: 'center',
-          gap: 0
+          gap: isMobile ? '40px' : '64px'
         }}>
-          {/* Centered headline, copy, CTAs */}
+          {/* Left: headline, copy, CTAs */}
           <div style={{
-            textAlign: 'center',
-            maxWidth: '720px',
-            margin: '0 auto',
-            padding: isMobile ? '0 4px' : '0 12px',
+            flex: '0 0 auto',
+            width: isMobile ? '100%' : '420px',
+            textAlign: 'left',
+            padding: '0',
             animation: 'fadeInUp 0.8s ease-out 0.1s backwards'
           }}>
             {/* Main headline */}
@@ -238,8 +238,8 @@ export function HomePage() {
               gap: '14px',
               flexWrap: 'wrap',
               flexDirection: isMobile ? 'column' : 'row',
-              alignItems: 'center',
-              justifyContent: 'center'
+              alignItems: isMobile ? 'stretch' : 'center',
+              justifyContent: 'flex-start'
             }}>
               <a
                 className="btn"
@@ -302,143 +302,190 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Visual bridge from message to system diagram */}
-          <div
-            aria-hidden
-            style={{
-              width: 'min(420px, 72%)',
-              height: '1px',
-              marginTop: isMobile ? '28px' : '32px',
-              marginBottom: isMobile ? '20px' : '24px',
-              background: 'linear-gradient(90deg, transparent, rgba(89,173,158,0.45) 20%, rgba(238,120,67,0.35) 50%, rgba(89,173,158,0.45) 80%, transparent)',
-              opacity: 0.85
-            }}
-          />
-
-          {/* Diagram: left stack (KYA, Wallet, Skyfire, Agent) | connector | Security + services */}
+          {/* Right: diagram */}
           <div style={{
-            width: '100%',
-            maxWidth: '960px',
-            margin: '0 auto',
-            padding: isMobile ? '0' : '0 8px',
+            flex: 1,
+            minWidth: 0,
             animation: 'fadeInUp 0.8s ease-out 0.2s backwards'
           }}>
             <svg
               style={{
                 width: '100%',
                 height: 'auto',
-                maxHeight: isMobile ? 'min(42vh, 320px)' : 'min(38vh, 280px)',
                 display: 'block'
               }}
-              viewBox="0 0 635 238"
+              viewBox="0 0 520 345"
               preserveAspectRatio="xMidYMid meet"
               role="img"
-              aria-label="Agent stack: KYA and Wallet feed Skyfire, Skyfire feeds Agent; Agent connects to Security; Security reaches Websites, Checkout, OAuth, and Protocols. Dots show flow direction."
+              aria-label="Agent stack: KYA and Wallet feed Skyfire, Skyfire feeds Agent; Agent connects to Security; Security reaches Websites, Checkout, OAuth, and Protocols."
             >
               <defs>
-                <radialGradient id="hero-orange-glow">
-                  <stop offset="0%" stopColor="#EE7843" stopOpacity="0.28" />
-                  <stop offset="100%" stopColor="#EE7843" stopOpacity="0" />
-                </radialGradient>
-                <radialGradient id="hero-teal-glow">
-                  <stop offset="0%" stopColor="#59AD9E" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#59AD9E" stopOpacity="0" />
-                </radialGradient>
+                {/* Glow filters */}
+                <filter id="glow-orange" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="glow-teal" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="glow-white" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+
+                {/* Directional arrowheads — userSpaceOnUse so size is in SVG px, not stroke-width multiples */}
+                <marker id="arr-teal" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#59AD9E" fillOpacity="0.8" />
+                </marker>
+                <marker id="arr-orange" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#EE7843" fillOpacity="0.9" />
+                </marker>
               </defs>
 
-              {/* r=20 for all nodes; compact layout: left stack | bridge | Security + services */}
+              {/* ── Connection lines (drawn first, circles paint over the endpoints) ── */}
               <g strokeLinecap="round">
-                <line x1="68" y1="178" x2="118" y2="118" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.32" />
-                <line x1="192" y1="178" x2="142" y2="118" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.32" />
-                <line x1="130" y1="80" x2="130" y2="58" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.36" />
-                <line x1="150" y1="38" x2="340" y2="100" stroke="#EE7843" strokeWidth="1.45" strokeOpacity="0.34" />
-                <line x1="380" y1="100" x2="590" y2="42" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.26" />
-                <line x1="380" y1="100" x2="590" y2="98" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.26" />
-                <line x1="380" y1="100" x2="590" y2="154" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.26" />
-                <line x1="380" y1="100" x2="590" y2="208" stroke="#59AD9E" strokeWidth="1.25" strokeOpacity="0.26" />
+                {/* KYA → Skyfire */}
+                <line x1="73" y1="236" x2="87" y2="214"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#arr-teal)" />
+                {/* Wallet → Skyfire */}
+                <line x1="137" y1="236" x2="123" y2="214"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#arr-teal)" />
+                {/* Skyfire → Agent */}
+                <line x1="105" y1="151" x2="105" y2="129"
+                  stroke="#EE7843" strokeWidth="1.6" strokeOpacity="0.65" markerEnd="url(#arr-orange)" />
+                {/* Agent → Security — long, dashed, dramatic */}
+                <line x1="137" y1="106" x2="268" y2="149"
+                  stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.6"
+                  strokeDasharray="8 5" markerEnd="url(#arr-orange)" />
+                {/* Security → Websites */}
+                <line x1="329" y1="142" x2="441" y2="73"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#arr-teal)" />
+                {/* Security → Checkout */}
+                <line x1="334" y1="155" x2="436" y2="140"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#arr-teal)" />
+                {/* Security → OAuth */}
+                <line x1="333" y1="170" x2="437" y2="200"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#arr-teal)" />
+                {/* Security → Protocols */}
+                <line x1="327" y1="181" x2="443" y2="269"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#arr-teal)" />
               </g>
 
-              <g>
-                <circle cx="130" cy="38" r="20" fill="url(#hero-teal-glow)" />
-                <circle cx="130" cy="38" r="20" fill="none" stroke="rgba(89,173,158,0.45)" strokeWidth="1.5" />
-                <text x="130" y="41" textAnchor="middle" fill="#E8FFFA" fontSize="8.5" fontWeight="700">AGENT</text>
-              </g>
+              {/* ── Nodes (r=34 all, painted on top of lines) ─────────────── */}
 
-              <g>
-                <circle cx="130" cy="100" r="20" fill="url(#hero-orange-glow)" />
-                <circle cx="130" cy="100" r="20" fill="none" stroke="#EE7843" strokeWidth="1.5" strokeOpacity="0.85">
-                  <animate attributeName="stroke-opacity" values="0.55;0.85;0.55" dur="2.6s" repeatCount="indefinite" />
+              {/* KYA */}
+              <g filter="url(#glow-teal)">
+                <circle cx="55" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
+                  <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
                 </circle>
-                <text x="130" y="103" textAnchor="middle" fill="#EE7843" fontSize="8.5" fontWeight="700">SKYFIRE</text>
+                <text x="55" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
               </g>
 
-              <g>
-                <circle cx="68" cy="178" r="20" fill="url(#hero-teal-glow)" />
-                <circle cx="68" cy="178" r="20" fill="none" stroke="rgba(89,173,158,0.45)" strokeWidth="1.5" />
-                <text x="68" y="181" textAnchor="middle" fill="#7FD4C1" fontSize="8.5" fontWeight="700">KYA</text>
+              {/* WALLET */}
+              <g filter="url(#glow-teal)">
+                <circle cx="155" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
+                  <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="4s" repeatCount="indefinite" begin="0.7s" />
+                </circle>
+                <text x="155" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">WALLET</text>
               </g>
 
-              <g>
-                <circle cx="192" cy="178" r="20" fill="url(#hero-teal-glow)" />
-                <circle cx="192" cy="178" r="20" fill="none" stroke="rgba(89,173,158,0.45)" strokeWidth="1.5" />
-                <text x="192" y="181" textAnchor="middle" fill="#7FD4C1" fontSize="7.5" fontWeight="700">WALLET</text>
+              {/* SKYFIRE */}
+              <g filter="url(#glow-orange)">
+                <circle cx="105" cy="185" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2" strokeOpacity="0.85">
+                  <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" />
+                </circle>
+                <text x="105" y="189" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">SKYFIRE</text>
               </g>
 
-              <g>
-                <circle cx="360" cy="100" r="20" fill="rgba(255,255,255,0.04)" />
-                <circle cx="360" cy="100" r="20" fill="none" stroke="rgba(238,120,67,0.5)" strokeWidth="1.5" />
-                <text x="360" y="103" textAnchor="middle" fill="#fff" fontSize="8" fontWeight="700">SECURITY</text>
+              {/* AGENT */}
+              <g filter="url(#glow-white)">
+                <circle cx="105" cy="95" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                  <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
+                </circle>
+                <text x="105" y="99" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
               </g>
 
-              <g>
-                <circle cx="610" cy="42" r="20" fill="rgba(89,173,158,0.08)" stroke="#59AD9E" strokeWidth="1.25" />
-                <text x="610" y="45" textAnchor="middle" fill="#C8FFF4" fontSize="8" fontWeight="600">WEBSITES</text>
-              </g>
-              <g>
-                <circle cx="610" cy="98" r="20" fill="rgba(89,173,158,0.08)" stroke="#59AD9E" strokeWidth="1.25" />
-                <text x="610" y="101" textAnchor="middle" fill="#C8FFF4" fontSize="8" fontWeight="600">CHECKOUT</text>
-              </g>
-              <g>
-                <circle cx="610" cy="154" r="20" fill="rgba(89,173,158,0.08)" stroke="#59AD9E" strokeWidth="1.25" />
-                <text x="610" y="157" textAnchor="middle" fill="#C8FFF4" fontSize="8" fontWeight="600">OAUTH</text>
-              </g>
-              <g>
-                <circle cx="610" cy="208" r="20" fill="rgba(89,173,158,0.08)" stroke="#59AD9E" strokeWidth="1.25" />
-                <text x="610" y="205" textAnchor="middle" fill="#C8FFF4" fontSize="7.5" fontWeight="600">PROTOCOLS</text>
-                <text x="610" y="232" textAnchor="middle" fill="rgba(255,255,255,0.38)" fontSize="6.5" fontWeight="500">MCP · UCP · Ack</text>
+              {/* SECURITY */}
+              <g filter="url(#glow-orange)">
+                <circle cx="300" cy="160" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.8">
+                  <animate attributeName="stroke-opacity" values="0.45;0.9;0.45" dur="3s" repeatCount="indefinite" begin="0.8s" />
+                </circle>
+                <text x="300" y="164" textAnchor="middle" fill="#fff" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.05em">SECURITY</text>
               </g>
 
+              {/* WEBSITES */}
+              <g filter="url(#glow-teal)">
+                <circle cx="470" cy="55" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                  <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+                </circle>
+                <text x="470" y="59" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.04em">WEBSITES</text>
+              </g>
+
+              {/* CHECKOUT */}
+              <g filter="url(#glow-teal)">
+                <circle cx="470" cy="135" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                  <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.2s" repeatCount="indefinite" begin="1.1s" />
+                </circle>
+                <text x="470" y="139" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">CHECKOUT</text>
+              </g>
+
+              {/* OAUTH */}
+              <g filter="url(#glow-teal)">
+                <circle cx="470" cy="215" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                  <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.9s" repeatCount="indefinite" begin="1.7s" />
+                </circle>
+                <text x="470" y="219" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.05em">OAUTH</text>
+              </g>
+
+              {/* PROTOCOLS */}
+              <g filter="url(#glow-teal)">
+                <circle cx="470" cy="295" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                  <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="4.1s" repeatCount="indefinite" begin="2.2s" />
+                </circle>
+                <text x="470" y="299" textAnchor="middle" fill="#C8FFF4" fontSize="10" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">PROTOCOLS</text>
+              </g>
+
+              {/* ── Animated data-flow pulses (edge-to-edge) ──────────── */}
               <g>
+                {/* KYA → Skyfire */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 68 178 L 130 100" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 73 236 L 87 214" />
                   <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0;0;0" keyTimes="0;0.05;0.14;0.18;1;1;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
                 </circle>
+                {/* Wallet → Skyfire */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 192 178 L 130 100" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 137 236 L 123 214" />
                   <animate attributeName="opacity" values="0;0;0;1;1;0;0;0;0;0;0" keyTimes="0;0.08;0.12;0.14;0.22;0.26;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
                 </circle>
-                <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 130 80 L 130 58" />
+                {/* Skyfire → Agent */}
+                <circle r="3" fill="#EE7843">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 105 151 L 105 129" />
                   <animate attributeName="opacity" values="0;0;0;0;0;1;1;0;0;0;0" keyTimes="0;0.2;0.24;0.26;0.28;0.3;0.38;0.42;1;1;1" dur="10s" repeatCount="indefinite" />
                 </circle>
-                <circle r="3" fill="#EE7843">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 150 38 L 340 100" />
+                {/* Agent → Security */}
+                <circle r="3.5" fill="#EE7843">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 137 106 L 268 149" />
                   <animate attributeName="opacity" values="0;0;0;0;0;0;0;1;1;0;0" keyTimes="0;0.35;0.38;0.4;0.42;0.44;0.46;0.48;0.58;0.62;1" dur="10s" repeatCount="indefinite" />
                 </circle>
+                {/* Security → Websites */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 380 100 L 590 42" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 329 142 L 441 73" />
                   <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.5;0.52;0.54;0.56;0.58;0.6;0.62;0.64;0.66;0.72" dur="10s" repeatCount="indefinite" />
                 </circle>
+                {/* Security → Checkout */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 380 100 L 590 98" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 334 155 L 436 140" />
                   <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.6;0.62;0.64;0.66;0.68;0.7;0.72;0.74;0.76;0.78;0.84" dur="10s" repeatCount="indefinite" />
                 </circle>
+                {/* Security → OAuth */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 380 100 L 590 154" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 333 170 L 437 200" />
                   <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.65;0.67;0.69;0.71;0.73;0.75;0.77;0.79;0.81;0.83;0.85;0.9" dur="10s" repeatCount="indefinite" />
                 </circle>
+                {/* Security → Protocols */}
                 <circle r="3" fill="#59AD9E">
-                  <animateMotion dur="10s" repeatCount="indefinite" path="M 380 100 L 590 208" />
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 327 181 L 443 269" />
                   <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.7;0.72;0.74;0.76;0.78;0.8;0.82;0.84;0.86;0.88;0.9;0.92;0.98" dur="10s" repeatCount="indefinite" />
                 </circle>
               </g>
@@ -618,10 +665,168 @@ export function HomePage() {
           margin: '0 auto',
           borderRadius: '20px',
           overflow: 'hidden',
-          border: '1px solid var(--hp-border)',
-          boxShadow: '0 12px 40px rgba(14,14,14,0.08)'
+          border: '1px solid rgba(255,255,255,0.08)',
+          boxShadow: '0 12px 40px rgba(14,14,14,0.08)',
+          background: '#0A0A0A',
+          padding: '48px 32px'
         }}>
-          <TrustNetworkCanvas />
+          <svg
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            viewBox="0 0 520 345"
+            preserveAspectRatio="xMidYMid meet"
+            role="img"
+            aria-label="Agent data flow: KYA and Wallet feed Skyfire, Skyfire feeds Agent; Agent connects to Security; Security reaches Websites, Checkout, OAuth, and Protocols."
+          >
+            <defs>
+              <filter id="aaf-glow-orange" x="-70%" y="-70%" width="240%" height="240%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <filter id="aaf-glow-teal" x="-70%" y="-70%" width="240%" height="240%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <filter id="aaf-glow-white" x="-70%" y="-70%" width="240%" height="240%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+              <marker id="aaf-arr-teal" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#59AD9E" fillOpacity="0.8" />
+              </marker>
+              <marker id="aaf-arr-orange" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#EE7843" fillOpacity="0.9" />
+              </marker>
+            </defs>
+
+            {/* Connection lines */}
+            <g strokeLinecap="round">
+              <line x1="73" y1="236" x2="87" y2="214"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#aaf-arr-teal)" />
+              <line x1="137" y1="236" x2="123" y2="214"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#aaf-arr-teal)" />
+              <line x1="105" y1="151" x2="105" y2="129"
+                stroke="#EE7843" strokeWidth="1.6" strokeOpacity="0.65" markerEnd="url(#aaf-arr-orange)" />
+              <line x1="137" y1="106" x2="268" y2="149"
+                stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.6"
+                strokeDasharray="8 5" markerEnd="url(#aaf-arr-orange)" />
+              <line x1="329" y1="142" x2="441" y2="73"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
+              <line x1="334" y1="155" x2="436" y2="140"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
+              <line x1="333" y1="170" x2="437" y2="200"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
+              <line x1="327" y1="181" x2="443" y2="269"
+                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
+            </g>
+
+            {/* KYA */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="55" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
+                <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
+              </circle>
+              <text x="55" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
+            </g>
+
+            {/* WALLET */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="155" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
+                <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="4s" repeatCount="indefinite" begin="0.7s" />
+              </circle>
+              <text x="155" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">WALLET</text>
+            </g>
+
+            {/* SKYFIRE */}
+            <g filter="url(#aaf-glow-orange)">
+              <circle cx="105" cy="185" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2" strokeOpacity="0.85">
+                <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" />
+              </circle>
+              <text x="105" y="189" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">SKYFIRE</text>
+            </g>
+
+            {/* AGENT */}
+            <g filter="url(#aaf-glow-white)">
+              <circle cx="105" cy="95" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
+              </circle>
+              <text x="105" y="99" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
+            </g>
+
+            {/* SECURITY */}
+            <g filter="url(#aaf-glow-orange)">
+              <circle cx="300" cy="160" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.8">
+                <animate attributeName="stroke-opacity" values="0.45;0.9;0.45" dur="3s" repeatCount="indefinite" begin="0.8s" />
+              </circle>
+              <text x="300" y="164" textAnchor="middle" fill="#fff" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.05em">SECURITY</text>
+            </g>
+
+            {/* WEBSITES */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="470" cy="55" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+              </circle>
+              <text x="470" y="59" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.04em">WEBSITES</text>
+            </g>
+
+            {/* CHECKOUT */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="470" cy="135" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.2s" repeatCount="indefinite" begin="1.1s" />
+              </circle>
+              <text x="470" y="139" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">CHECKOUT</text>
+            </g>
+
+            {/* OAUTH */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="470" cy="215" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.9s" repeatCount="indefinite" begin="1.7s" />
+              </circle>
+              <text x="470" y="219" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.05em">OAUTH</text>
+            </g>
+
+            {/* PROTOCOLS */}
+            <g filter="url(#aaf-glow-teal)">
+              <circle cx="470" cy="295" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="4.1s" repeatCount="indefinite" begin="2.2s" />
+              </circle>
+              <text x="470" y="299" textAnchor="middle" fill="#C8FFF4" fontSize="10" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">PROTOCOLS</text>
+            </g>
+
+            {/* Animated data-flow pulses (edge-to-edge) */}
+            <g>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 73 236 L 87 214" />
+                <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0;0;0" keyTimes="0;0.05;0.14;0.18;1;1;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 137 236 L 123 214" />
+                <animate attributeName="opacity" values="0;0;0;1;1;0;0;0;0;0;0" keyTimes="0;0.08;0.12;0.14;0.22;0.26;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#EE7843">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 105 151 L 105 129" />
+                <animate attributeName="opacity" values="0;0;0;0;0;1;1;0;0;0;0" keyTimes="0;0.2;0.24;0.26;0.28;0.3;0.38;0.42;1;1;1" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3.5" fill="#EE7843">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 137 106 L 268 149" />
+                <animate attributeName="opacity" values="0;0;0;0;0;0;0;1;1;0;0" keyTimes="0;0.35;0.38;0.4;0.42;0.44;0.46;0.48;0.58;0.62;1" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 329 142 L 441 73" />
+                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.5;0.52;0.54;0.56;0.58;0.6;0.62;0.64;0.66;0.72" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 334 155 L 436 140" />
+                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.6;0.62;0.64;0.66;0.68;0.7;0.72;0.74;0.76;0.78;0.84" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 333 170 L 437 200" />
+                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.65;0.67;0.69;0.71;0.73;0.75;0.77;0.79;0.81;0.83;0.85;0.9" dur="10s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3" fill="#59AD9E">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M 327 181 L 443 269" />
+                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.7;0.72;0.74;0.76;0.78;0.8;0.82;0.84;0.86;0.88;0.9;0.92;0.98" dur="10s" repeatCount="indefinite" />
+              </circle>
+            </g>
+          </svg>
         </div>
         <div style={{ textAlign: 'center', marginTop: '28px' }}>
           <a
