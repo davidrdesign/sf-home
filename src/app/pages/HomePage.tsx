@@ -649,194 +649,241 @@ export function HomePage() {
         </div>
       </div>
 
-            {/* Access story: replaces product matrix */}
-      <div className="matrix-section access-story-section">
-        <div className="matrix-header">
-          <div className="hp-eyebrow">ACCESS</div>
-          <h2>Enable Agent Access At Internet Scale</h2>
-          <p>
-            Teams that operate agents need reliable access to websites and dependable checkout, not one-off hacks.
-            KYA tokens from Skyfire are how you authorize access and payment in one stack, built for programmatic
-            login, session continuity, and agentic commerce across the open web.
-          </p>
-        </div>
+            {/* Access story — hero-style full-bleed */}
+      <div style={{
+        position: 'relative',
+        background: 'var(--hp-ink)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        padding: isMobile ? '80px 20px' : isTablet ? '96px 28px' : '100px 40px'
+      }}>
+        {/* Subtle gradient background */}
         <div style={{
-          maxWidth: '960px',
+          position: 'absolute',
+          inset: 0,
+          background: `
+            radial-gradient(circle at 70% 50%, rgba(89,173,158,0.08) 0%, transparent 50%),
+            radial-gradient(circle at 30% 50%, rgba(238,120,67,0.06) 0%, transparent 50%)
+          `
+        }} />
+
+        <div style={{
+          position: 'relative',
+          zIndex: 10,
+          maxWidth: '1100px',
+          width: '100%',
           margin: '0 auto',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          border: '1px solid rgba(255,255,255,0.08)',
-          boxShadow: '0 12px 40px rgba(14,14,14,0.08)',
-          background: '#0A0A0A',
-          padding: '48px 32px'
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          alignItems: 'center',
+          gap: isMobile ? '40px' : '64px'
         }}>
-          <svg
-            style={{ width: '100%', height: 'auto', display: 'block' }}
-            viewBox="0 0 520 345"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            aria-label="Agent data flow: KYA and Wallet feed Skyfire, Skyfire feeds Agent; Agent connects to Security; Security reaches Websites, Checkout, OAuth, and Protocols."
-          >
-            <defs>
-              <filter id="aaf-glow-orange" x="-70%" y="-70%" width="240%" height="240%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-              <filter id="aaf-glow-teal" x="-70%" y="-70%" width="240%" height="240%">
-                <feGaussianBlur stdDeviation="5" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-              <filter id="aaf-glow-white" x="-70%" y="-70%" width="240%" height="240%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
-              <marker id="aaf-arr-teal" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
-                <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#59AD9E" fillOpacity="0.8" />
-              </marker>
-              <marker id="aaf-arr-orange" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
-                <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#EE7843" fillOpacity="0.9" />
-              </marker>
-            </defs>
+          {/* Left: text */}
+          <div style={{
+            flex: '0 0 auto',
+            width: isMobile ? '100%' : '420px',
+            textAlign: 'left'
+          }}>
+            <div style={{
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: '#59AD9E',
+              marginBottom: '16px'
+            }}>ACCESS</div>
+            <h2 style={{
+              fontSize: isMobile ? 'clamp(32px, 10vw, 48px)' : 'clamp(36px, 3.5vw, 52px)',
+              fontWeight: 500,
+              letterSpacing: '-0.04em',
+              lineHeight: 1.1,
+              color: '#fff',
+              marginBottom: '20px'
+            }}>
+              Enable Agent Access<br />At Internet Scale
+            </h2>
+            <p style={{
+              fontSize: isMobile ? '16px' : 'clamp(16px, 1.65vw, 18px)',
+              fontWeight: 300,
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.6)',
+              marginBottom: '28px'
+            }}>
+              Teams that operate agents need reliable access to websites and dependable checkout, not one-off hacks.
+              KYA tokens from Skyfire authorize access and payment in one stack — built for programmatic
+              login, session continuity, and agentic commerce across the open web.
+            </p>
+            <a
+              href="https://kyapay.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: 'linear-gradient(135deg, #59AD9E 0%, #3E9686 100%)',
+                color: '#fff',
+                padding: isMobile ? '16px 24px' : '14px 32px',
+                fontSize: '15px',
+                border: 'none',
+                boxShadow: '0 8px 24px rgba(89,173,158,0.3)',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                borderRadius: '100px',
+                fontWeight: 500
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(89,173,158,0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(89,173,158,0.3)';
+              }}
+            >
+              Enable Agent Access →
+            </a>
+          </div>
 
-            {/* Connection lines */}
-            <g strokeLinecap="round">
-              <line x1="73" y1="236" x2="87" y2="214"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#aaf-arr-teal)" />
-              <line x1="137" y1="236" x2="123" y2="214"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#aaf-arr-teal)" />
-              <line x1="105" y1="151" x2="105" y2="129"
-                stroke="#EE7843" strokeWidth="1.6" strokeOpacity="0.65" markerEnd="url(#aaf-arr-orange)" />
-              <line x1="137" y1="106" x2="268" y2="149"
-                stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.6"
-                strokeDasharray="8 5" markerEnd="url(#aaf-arr-orange)" />
-              <line x1="329" y1="142" x2="441" y2="73"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
-              <line x1="334" y1="155" x2="436" y2="140"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
-              <line x1="333" y1="170" x2="437" y2="200"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
-              <line x1="327" y1="181" x2="443" y2="269"
-                stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.45" markerEnd="url(#aaf-arr-teal)" />
-            </g>
+          {/* Right: diagram */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <svg
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+              viewBox="0 0 600 365"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Access flow: KYA feeds Skyfire, Skyfire feeds Agent; User pairs with Agent; both User and Agent send to CDN; CDN flows to Website then Login."
+            >
+              <defs>
+                <filter id="aaf-glow-orange" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="aaf-glow-teal" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="5" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <filter id="aaf-glow-white" x="-70%" y="-70%" width="240%" height="240%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <marker id="aaf-arr-teal" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#59AD9E" fillOpacity="0.8" />
+                </marker>
+                <marker id="aaf-arr-orange" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="#EE7843" fillOpacity="0.9" />
+                </marker>
+                <marker id="aaf-arr-white" markerWidth="9" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                  <path d="M0,0.5 L0,6.5 L9,3.5 z" fill="rgba(255,255,255,0.55)" />
+                </marker>
+              </defs>
 
-            {/* KYA */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="55" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
-                <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
-              </circle>
-              <text x="55" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
-            </g>
+              {/* Connection lines */}
+              <g strokeLinecap="round">
+                <line x1="80" y1="89" x2="80" y2="116"
+                  stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeDasharray="4 5" />
+                <line x1="80" y1="291" x2="80" y2="274"
+                  stroke="#59AD9E" strokeWidth="1.4" strokeOpacity="0.5" markerEnd="url(#aaf-arr-teal)" />
+                <line x1="80" y1="206" x2="80" y2="184"
+                  stroke="#EE7843" strokeWidth="1.6" strokeOpacity="0.65" markerEnd="url(#aaf-arr-orange)" />
+                <path d="M 113 63 Q 190 40, 247 93"
+                  fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeDasharray="6 6"
+                  markerEnd="url(#aaf-arr-white)" />
+                <path d="M 113 142 Q 190 128, 247 108"
+                  fill="none" stroke="#EE7843" strokeWidth="1.8" strokeOpacity="0.35" strokeDasharray="6 6"
+                  markerEnd="url(#aaf-arr-orange)" />
+                <line x1="314" y1="100" x2="386" y2="100"
+                  stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" markerEnd="url(#aaf-arr-white)" />
+                <line x1="454" y1="100" x2="526" y2="100"
+                  stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" markerEnd="url(#aaf-arr-white)" />
+              </g>
 
-            {/* WALLET */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="155" cy="265" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
-                <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="4s" repeatCount="indefinite" begin="0.7s" />
-              </circle>
-              <text x="155" y="269" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">WALLET</text>
-            </g>
+              {/* USER */}
+              <g filter="url(#aaf-glow-white)">
+                <circle cx="80" cy="55" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5">
+                  <animate attributeName="stroke-opacity" values="0.25;0.5;0.25" dur="4s" repeatCount="indefinite" />
+                </circle>
+                <text x="80" y="59" textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">USER</text>
+              </g>
 
-            {/* SKYFIRE */}
-            <g filter="url(#aaf-glow-orange)">
-              <circle cx="105" cy="185" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2" strokeOpacity="0.85">
-                <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" />
-              </circle>
-              <text x="105" y="189" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">SKYFIRE</text>
-            </g>
+              {/* AGENT */}
+              <g filter="url(#aaf-glow-orange)">
+                <circle cx="80" cy="150" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="1.8" strokeOpacity="0.85">
+                  <animate attributeName="stroke-opacity" values="0.5;0.95;0.5" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+                </circle>
+                <text x="80" y="154" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
+              </g>
 
-            {/* AGENT */}
-            <g filter="url(#aaf-glow-white)">
-              <circle cx="105" cy="95" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
-                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
-              </circle>
-              <text x="105" y="99" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
-            </g>
+              {/* SKYFIRE */}
+              <g filter="url(#aaf-glow-orange)">
+                <circle cx="80" cy="240" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2" strokeOpacity="0.85">
+                  <animate attributeName="stroke-opacity" values="0.5;1;0.5" dur="2.6s" repeatCount="indefinite" />
+                </circle>
+                <text x="80" y="244" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">SKYFIRE</text>
+              </g>
 
-            {/* SECURITY */}
-            <g filter="url(#aaf-glow-orange)">
-              <circle cx="300" cy="160" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2.2" strokeOpacity="0.8">
-                <animate attributeName="stroke-opacity" values="0.45;0.9;0.45" dur="3s" repeatCount="indefinite" begin="0.8s" />
-              </circle>
-              <text x="300" y="164" textAnchor="middle" fill="#fff" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.05em">SECURITY</text>
-            </g>
+              {/* KYA */}
+              <g filter="url(#aaf-glow-teal)">
+                <circle cx="80" cy="325" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.6">
+                  <animate attributeName="stroke-opacity" values="0.4;0.75;0.4" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
+                </circle>
+                <text x="80" y="329" textAnchor="middle" fill="#7FD4C1" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
+              </g>
 
-            {/* WEBSITES */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="470" cy="55" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
-                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-              </circle>
-              <text x="470" y="59" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.04em">WEBSITES</text>
-            </g>
+              {/* CDN */}
+              <g filter="url(#aaf-glow-white)">
+                <circle cx="280" cy="100" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5">
+                  <animate attributeName="stroke-opacity" values="0.2;0.45;0.2" dur="3.2s" repeatCount="indefinite" begin="0.3s" />
+                </circle>
+                <text x="280" y="104" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">CDN</text>
+              </g>
 
-            {/* CHECKOUT */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="470" cy="135" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
-                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.2s" repeatCount="indefinite" begin="1.1s" />
-              </circle>
-              <text x="470" y="139" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">CHECKOUT</text>
-            </g>
+              {/* WEBSITE */}
+              <g filter="url(#aaf-glow-white)">
+                <circle cx="420" cy="100" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5">
+                  <animate attributeName="stroke-opacity" values="0.2;0.45;0.2" dur="3.6s" repeatCount="indefinite" begin="0.9s" />
+                </circle>
+                <text x="420" y="104" textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.05em">WEBSITE</text>
+              </g>
 
-            {/* OAUTH */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="470" cy="215" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
-                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.9s" repeatCount="indefinite" begin="1.7s" />
-              </circle>
-              <text x="470" y="219" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.05em">OAUTH</text>
-            </g>
+              {/* LOGIN */}
+              <g filter="url(#aaf-glow-teal)">
+                <circle cx="560" cy="100" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.8" strokeOpacity="0.7">
+                  <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" begin="1.2s" />
+                </circle>
+                <text x="560" y="104" textAnchor="middle" fill="#59AD9E" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">LOGIN</text>
+              </g>
 
-            {/* PROTOCOLS */}
-            <g filter="url(#aaf-glow-teal)">
-              <circle cx="470" cy="295" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
-                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="4.1s" repeatCount="indefinite" begin="2.2s" />
-              </circle>
-              <text x="470" y="299" textAnchor="middle" fill="#C8FFF4" fontSize="10" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.03em">PROTOCOLS</text>
-            </g>
-
-            {/* Animated data-flow pulses (edge-to-edge) */}
-            <g>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 73 236 L 87 214" />
-                <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0;0;0" keyTimes="0;0.05;0.14;0.18;1;1;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 137 236 L 123 214" />
-                <animate attributeName="opacity" values="0;0;0;1;1;0;0;0;0;0;0" keyTimes="0;0.08;0.12;0.14;0.22;0.26;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#EE7843">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 105 151 L 105 129" />
-                <animate attributeName="opacity" values="0;0;0;0;0;1;1;0;0;0;0" keyTimes="0;0.2;0.24;0.26;0.28;0.3;0.38;0.42;1;1;1" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3.5" fill="#EE7843">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 137 106 L 268 149" />
-                <animate attributeName="opacity" values="0;0;0;0;0;0;0;1;1;0;0" keyTimes="0;0.35;0.38;0.4;0.42;0.44;0.46;0.48;0.58;0.62;1" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 329 142 L 441 73" />
-                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.5;0.52;0.54;0.56;0.58;0.6;0.62;0.64;0.66;0.72" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 334 155 L 436 140" />
-                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.6;0.62;0.64;0.66;0.68;0.7;0.72;0.74;0.76;0.78;0.84" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 333 170 L 437 200" />
-                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.65;0.67;0.69;0.71;0.73;0.75;0.77;0.79;0.81;0.83;0.85;0.9" dur="10s" repeatCount="indefinite" />
-              </circle>
-              <circle r="3" fill="#59AD9E">
-                <animateMotion dur="10s" repeatCount="indefinite" path="M 327 181 L 443 269" />
-                <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.7;0.72;0.74;0.76;0.78;0.8;0.82;0.84;0.86;0.88;0.9;0.92;0.98" dur="10s" repeatCount="indefinite" />
-              </circle>
-            </g>
-          </svg>
-        </div>
-        <div style={{ textAlign: 'center', marginTop: '28px' }}>
-          <a
-            href="https://kyapay.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-teal"
-          >
-            Enable Agent Access →
-          </a>
+              {/* Animated data-flow pulses */}
+              <g>
+                <circle r="3" fill="#59AD9E">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 80 291 L 80 274" />
+                  <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0;0;0" keyTimes="0;0.02;0.08;0.12;1;1;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3" fill="#EE7843">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 80 206 L 80 184" />
+                  <animate attributeName="opacity" values="0;0;0;1;1;0;0;0;0;0;0" keyTimes="0;0.1;0.12;0.14;0.2;0.24;1;1;1;1;1" dur="10s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3.5" fill="rgba(255,255,255,0.85)">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 113 63 Q 190 40, 247 93" />
+                  <animate attributeName="opacity" values="0;0;0;0;0;1;1;0;0;0;0" keyTimes="0;0.22;0.24;0.26;0.28;0.3;0.42;0.46;1;1;1" dur="10s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3.5" fill="#EE7843">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 113 142 Q 190 128, 247 108" />
+                  <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;0;0;0" keyTimes="0;0.3;0.32;0.34;0.36;0.38;0.4;0.52;0.56;1;1" dur="10s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3" fill="#59AD9E">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 314 100 L 386 100" />
+                  <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;1;1;0" keyTimes="0;0.5;0.52;0.54;0.56;0.58;0.6;0.62;0.64;0.72;0.76" dur="10s" repeatCount="indefinite" />
+                </circle>
+                <circle r="3" fill="#59AD9E">
+                  <animateMotion dur="10s" repeatCount="indefinite" path="M 454 100 L 526 100" />
+                  <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;1;0" keyTimes="0;0.7;0.72;0.74;0.76;0.78;0.8;0.82;0.84;0.86;0.88;0.94" dur="10s" repeatCount="indefinite" />
+                </circle>
+              </g>
+            </svg>
+          </div>
         </div>
       </div>
 
