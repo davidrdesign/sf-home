@@ -17,6 +17,15 @@ export function AgentAccessFlow() {
                 <feGaussianBlur stdDeviation="7" result="blur" />
                 <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
               </filter>
+              <filter id="aaf-glow-skyfire" x="-90%" y="-90%" width="280%" height="280%">
+                <feGaussianBlur stdDeviation="10" result="blur-1" />
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur-2" />
+                <feMerge>
+                  <feMergeNode in="blur-1" />
+                  <feMergeNode in="blur-2" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
               {/* Glow filter – teal */}
               <filter id="aaf-glow-teal" x="-60%" y="-60%" width="220%" height="220%">
                 <feGaussianBlur stdDeviation="6" result="blur" />
@@ -38,14 +47,39 @@ export function AgentAccessFlow() {
               <marker id="aaf-arr-teal-up" markerWidth="7" markerHeight="7" refX="3.5" refY="5" orient="auto">
                 <path d="M0.5,7 L6.5,7 L3.5,0 z" fill="rgba(89,173,158,0.7)" />
               </marker>
+              <marker id="aaf-arr-orange-up" markerWidth="7" markerHeight="7" refX="3.5" refY="5" orient="auto">
+                <path d="M0.5,7 L6.5,7 L3.5,0 z" fill="rgba(238,120,67,0.86)" />
+              </marker>
+
+              <radialGradient id="aaf-skyfire-core" cx="50%" cy="45%" r="72%">
+                <stop offset="0%" stopColor="rgba(255,215,194,0.24)" />
+                <stop offset="52%" stopColor="rgba(238,120,67,0.1)" />
+                <stop offset="100%" stopColor="rgba(12,12,14,0)" />
+              </radialGradient>
+              <radialGradient id="aaf-skyfire-halo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(238,120,67,0.26)" />
+                <stop offset="62%" stopColor="rgba(238,120,67,0.08)" />
+                <stop offset="100%" stopColor="rgba(238,120,67,0)" />
+              </radialGradient>
+
+              <linearGradient id="aaf-kya-channel" x1="100" y1="371" x2="100" y2="304" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="rgba(89,173,158,0.04)" />
+                <stop offset="45%" stopColor="rgba(89,173,158,0.66)" />
+                <stop offset="100%" stopColor="rgba(200,255,244,0.98)" />
+              </linearGradient>
+              <linearGradient id="aaf-agent-channel" x1="100" y1="233" x2="100" y2="177" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="rgba(238,120,67,0.08)" />
+                <stop offset="48%" stopColor="rgba(238,120,67,0.74)" />
+                <stop offset="100%" stopColor="rgba(255,220,202,0.98)" />
+              </linearGradient>
 
               {/* Animation paths */}
               <path id="aaf-p-user-cdn"    d="M 130 74  C 260 52  350 82  366 88" />
               <path id="aaf-p-agent-cdn"   d="M 134 162 C 270 130 350 86  366 88" />
               <path id="aaf-p-cdn-web"     d="M 436 88  L 550 88" />
               <path id="aaf-p-web-login"   d="M 620 88  L 736 88" />
-              <path id="aaf-p-kya-sky"     d="M 100 326 L 100 302" />
-              <path id="aaf-p-sky-agent"   d="M 100 234 L 100 206" />
+              <path id="aaf-p-kya-sky"     d="M 100 371 C 95 351, 95 324, 100 304" />
+              <path id="aaf-p-sky-agent"   d="M 100 233 C 92 216, 92 193, 100 177" />
             </defs>
 
             {/* ── Connection lines ───────────────────────────────────── */}
@@ -55,14 +89,30 @@ export function AgentAccessFlow() {
               stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" strokeDasharray="4 5" />
 
             {/* Vertical stack: KYA → SKYFIRE (upward arrow, teal) */}
-            <line x1="100" y1="326" x2="100" y2="305"
-              stroke="rgba(89,173,158,0.4)" strokeWidth="1.5"
+            <path d="M 100 371 C 95 351, 95 324, 100 304"
+              fill="none" stroke="rgba(89,173,158,0.18)" strokeWidth="8.2" strokeOpacity="0.45" />
+            <path d="M 100 371 C 95 351, 95 324, 100 304"
+              fill="none" stroke="url(#aaf-kya-channel)" strokeWidth="2.85" strokeOpacity="0.98"
               markerEnd="url(#aaf-arr-teal-up)" />
+            <path d="M 100 371 C 95 351, 95 324, 100 304"
+              fill="none" stroke="rgba(200,255,244,0.72)" strokeWidth="1.1"
+              strokeDasharray="2 7" strokeDashoffset="18">
+              <animate attributeName="stroke-dashoffset" values="18;0" dur="2.35s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.14;0.84;0.14" dur="2.35s" repeatCount="indefinite" />
+            </path>
 
             {/* Vertical stack: SKYFIRE → AGENT (upward arrow, teal) */}
-            <line x1="100" y1="234" x2="100" y2="208"
-              stroke="rgba(89,173,158,0.4)" strokeWidth="1.5"
-              markerEnd="url(#aaf-arr-teal-up)" />
+            <path d="M 100 233 C 92 216, 92 193, 100 177"
+              fill="none" stroke="rgba(238,120,67,0.2)" strokeWidth="8.6" strokeOpacity="0.48" />
+            <path d="M 100 233 C 92 216, 92 193, 100 177"
+              fill="none" stroke="url(#aaf-agent-channel)" strokeWidth="3" strokeOpacity="0.98"
+              markerEnd="url(#aaf-arr-orange-up)" />
+            <path d="M 100 233 C 92 216, 92 193, 100 177"
+              fill="none" stroke="rgba(255,220,202,0.78)" strokeWidth="1.15"
+              strokeDasharray="3 8" strokeDashoffset="22">
+              <animate attributeName="stroke-dashoffset" values="22;0" dur="2.05s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.14;0.88;0.14" dur="2.05s" repeatCount="indefinite" />
+            </path>
 
             {/* USER → CDN (upper curve, white) */}
             <path d="M 130 74 C 260 52 350 82 366 88"
@@ -117,12 +167,12 @@ export function AgentAccessFlow() {
             </circle>
 
             {/* KYA → SKYFIRE : small upward teal dot */}
-            <circle r="2.5" fill="#59AD9E">
+            <circle r="3" fill="#59AD9E">
               <animateMotion dur="0.9s" repeatCount="indefinite" begin="0.2s"><mpath href="#aaf-p-kya-sky" /></animateMotion>
             </circle>
 
             {/* SKYFIRE → AGENT : small upward teal dot */}
-            <circle r="2.5" fill="#59AD9E">
+            <circle r="3.2" fill="#EE7843">
               <animateMotion dur="1.0s" repeatCount="indefinite" begin="0.7s"><mpath href="#aaf-p-sky-agent" /></animateMotion>
             </circle>
 
@@ -131,71 +181,89 @@ export function AgentAccessFlow() {
             {/* USER */}
             <g filter="url(#aaf-glow-white)">
               <circle cx="100" cy="80" r="44" fill="rgba(255,255,255,0.03)">
-                <animate attributeName="r" values="44;50;44" dur="4s" repeatCount="indefinite" />
-                <animate attributeName="opacity" values="1;0.5;1" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="r" values="44;50;44" dur="4.2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0.5;1" dur="4.2s" repeatCount="indefinite" />
               </circle>
-              <circle cx="100" cy="80" r="30" fill="#0c0c0e" stroke="rgba(255,255,255,0.28)" strokeWidth="1.5" />
-              <text x="100" y="84" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">USER</text>
+              <circle cx="100" cy="80" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.2s" repeatCount="indefinite" begin="0.1s" />
+              </circle>
+              <text x="100" y="84" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">USER</text>
             </g>
 
             {/* AGENT */}
-            <g filter="url(#aaf-glow-orange)">
-              <circle cx="100" cy="174" r="50" fill="rgba(238,120,67,0.05)">
-                <animate attributeName="r" values="50;58;50" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
-                <animate attributeName="opacity" values="1;0.4;1" dur="3.5s" repeatCount="indefinite" begin="0.5s" />
+            <g filter="url(#aaf-glow-white)">
+              <circle cx="100" cy="145" r="44" fill="rgba(255,255,255,0.03)">
+                <animate attributeName="r" values="44;50;44" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
+                <animate attributeName="opacity" values="1;0.5;1" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
               </circle>
-              <circle cx="100" cy="174" r="34" fill="#0c0c0e" stroke="#EE7843" strokeWidth="1.8" />
-              <text x="100" y="178" textAnchor="middle" fill="#EE7843" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
+              <circle cx="100" cy="145" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.2s" repeatCount="indefinite" begin="0.3s" />
+              </circle>
+              <text x="100" y="149" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">AGENT</text>
             </g>
 
             {/* SKYFIRE (largest — the core trust layer) */}
-            <g filter="url(#aaf-glow-orange)">
-              <circle cx="100" cy="270" r="58" fill="rgba(238,120,67,0.04)">
-                <animate attributeName="r" values="58;66;58" dur="4.2s" repeatCount="indefinite" begin="1s" />
-                <animate attributeName="opacity" values="1;0.35;1" dur="4.2s" repeatCount="indefinite" begin="1s" />
+            <g filter="url(#aaf-glow-skyfire)">
+              <circle cx="100" cy="270" r="82" fill="url(#aaf-skyfire-halo)" opacity="0.95">
+                <animate attributeName="r" values="78;84;78" dur="3.6s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.55;0.95;0.55" dur="3.6s" repeatCount="indefinite" />
               </circle>
-              <circle cx="100" cy="270" r="38" fill="#0c0c0e" stroke="#EE7843" strokeWidth="2" />
-              <text x="100" y="274" textAnchor="middle" fill="#EE7843" fontSize="11" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.06em">SKYFIRE</text>
+              <circle cx="100" cy="270" r="57" fill="url(#aaf-skyfire-core)" opacity="0.95">
+                <animate attributeName="r" values="54;59;54" dur="3.2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="100" cy="270" r="45" fill="#0c0c0e" stroke="#EE7843" strokeWidth="3" strokeOpacity="1">
+                <animate attributeName="stroke-opacity" values="0.7;1;0.75" dur="2.2s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="100" cy="270" r="35" fill="none" stroke="rgba(255,214,196,0.22)" strokeWidth="1.1">
+                <animate attributeName="stroke-opacity" values="0.12;0.35;0.12" dur="2.2s" repeatCount="indefinite" />
+              </circle>
+              <text x="100" y="274.5" textAnchor="middle" fill="#FFD7C2" fontSize="11.8" fontWeight="800" fontFamily="Geist, sans-serif" letterSpacing="0.09em">SKYFIRE</text>
             </g>
 
             {/* KYA */}
             <g filter="url(#aaf-glow-teal)">
-              <circle cx="100" cy="350" r="36" fill="rgba(89,173,158,0.05)">
-                <animate attributeName="r" values="36;42;36" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
-                <animate attributeName="opacity" values="1;0.4;1" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
+              <circle cx="100" cy="395" r="34" fill="rgba(89,173,158,0.04)">
+                <animate attributeName="r" values="34;40;34" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
+                <animate attributeName="opacity" values="1;0.45;1" dur="3.8s" repeatCount="indefinite" begin="1.5s" />
               </circle>
-              <circle cx="100" cy="350" r="26" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.5" />
-              <text x="100" y="354" textAnchor="middle" fill="#59AD9E" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
+              <circle cx="100" cy="395" r="26" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.5" />
+              <text x="100" y="399" textAnchor="middle" fill="#59AD9E" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">KYA</text>
             </g>
 
             {/* CDN */}
             <g filter="url(#aaf-glow-white)">
-              <circle cx="401" cy="88" r="48" fill="rgba(255,255,255,0.02)">
-                <animate attributeName="r" values="48;54;48" dur="3.2s" repeatCount="indefinite" begin="0.3s" />
-                <animate attributeName="opacity" values="1;0.4;1" dur="3.2s" repeatCount="indefinite" begin="0.3s" />
+              <circle cx="401" cy="88" r="44" fill="rgba(255,255,255,0.03)">
+                <animate attributeName="r" values="44;50;44" dur="4s" repeatCount="indefinite" begin="0.5s" />
+                <animate attributeName="opacity" values="1;0.5;1" dur="4s" repeatCount="indefinite" begin="0.5s" />
               </circle>
-              <circle cx="401" cy="88" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" />
-              <text x="401" y="92" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">CDN</text>
+              <circle cx="401" cy="88" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite" begin="0.5s" />
+              </circle>
+              <text x="401" y="92" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.08em">CDN</text>
             </g>
 
             {/* WEBSITE */}
             <g filter="url(#aaf-glow-white)">
-              <circle cx="585" cy="88" r="44" fill="rgba(255,255,255,0.02)">
-                <animate attributeName="r" values="44;50;44" dur="3.6s" repeatCount="indefinite" begin="0.9s" />
-                <animate attributeName="opacity" values="1;0.4;1" dur="3.6s" repeatCount="indefinite" begin="0.9s" />
+              <circle cx="585" cy="88" r="44" fill="rgba(255,255,255,0.03)">
+                <animate attributeName="r" values="44;50;44" dur="4.1s" repeatCount="indefinite" begin="0.9s" />
+                <animate attributeName="opacity" values="1;0.5;1" dur="4.1s" repeatCount="indefinite" begin="0.9s" />
               </circle>
-              <circle cx="585" cy="88" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" />
-              <text x="585" y="92" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.07em">WEBSITE</text>
+              <circle cx="585" cy="88" r="34" fill="#0c0c0e" stroke="rgba(255,255,255,0.45)" strokeWidth="1.6">
+                <animate attributeName="stroke-opacity" values="0.3;0.6;0.3" dur="4.1s" repeatCount="indefinite" begin="0.9s" />
+              </circle>
+              <text x="585" y="92" textAnchor="middle" fill="#E8FFFA" fontSize="10.5" fontWeight="700" fontFamily="Geist, sans-serif" letterSpacing="0.06em">WEBSITE</text>
             </g>
 
             {/* LOGIN (success end node) */}
             <g filter="url(#aaf-glow-teal)">
-              <circle cx="770" cy="88" r="46" fill="rgba(89,173,158,0.05)">
-                <animate attributeName="r" values="46;54;46" dur="3s" repeatCount="indefinite" begin="1.2s" />
-                <animate attributeName="opacity" values="1;0.35;1" dur="3s" repeatCount="indefinite" begin="1.2s" />
+              <circle cx="770" cy="88" r="44" fill="rgba(89,173,158,0.05)">
+                <animate attributeName="r" values="44;50;44" dur="3.5s" repeatCount="indefinite" begin="1.2s" />
+                <animate attributeName="opacity" values="1;0.4;1" dur="3.5s" repeatCount="indefinite" begin="1.2s" />
               </circle>
-              <circle cx="770" cy="88" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.8" />
-              <text x="770" y="92" textAnchor="middle" fill="#59AD9E" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">LOGIN</text>
+              <circle cx="770" cy="88" r="34" fill="#0c0c0e" stroke="#59AD9E" strokeWidth="1.6" strokeOpacity="0.65">
+                <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3.5s" repeatCount="indefinite" begin="1.2s" />
+              </circle>
+              <text x="770" y="92" textAnchor="middle" fill="#C8FFF4" fontSize="10.5" fontWeight="600" fontFamily="Geist, sans-serif" letterSpacing="0.08em">LOGIN</text>
             </g>
 
           </svg>

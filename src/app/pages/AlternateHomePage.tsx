@@ -112,13 +112,14 @@ export function AlternateHomePage() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
+          gap: 6px;
           min-height: 52px;
-          padding: 0 22px;
+          padding: 0 24px;
           border-radius: 999px;
           font-size: 14px;
-          font-weight: 700;
-          letter-spacing: -0.02em;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          line-height: 1;
           text-decoration: none;
           transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease;
         }
